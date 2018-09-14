@@ -4,11 +4,10 @@
  * @author Rune Hjelsvold
  * @see http://php-html.net/tutorials/model-view-controller-in-php/ The tutorial code used as basis.
  */
-class Book {
+class Post {
 	public $id;
-	public $title;
-	public $author;
-	public $description;
+	public $body;
+	public $userId;
 
 /** Constructor
  * @param string $title Book title
@@ -16,12 +15,11 @@ class Book {
  * @param string $description Book description 
  * @param integer $id Book id (optional) 
  */
-	public function __construct($title, $author, $description, $id = -1)  
+	public function construct($id = -1, $body, $userId)  
     {  
         $this->id = $id;
-        $this->title = $title;
-	    $this->author = $author;
-	    $this->description = $description;
+        $this->body = $body;
+	    $this->userId = $userId;
     } 
 }
 

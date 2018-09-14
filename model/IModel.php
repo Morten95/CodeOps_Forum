@@ -5,14 +5,14 @@ Interface IModel {
      * @return Book[] An array of book objects indexed and ordered by their id.
 	 * @throws PDOException
      */
-    public function getBookList();
+    public function getPostList();
     
     /** Function retrieving information about a given book in the collection.
      * @param integer $id the id of the book to be retrieved
      * @return Book|null The book matching the $id exists in the collection; null otherwise.
 	 * @throws PDOException
      */
-    public function getBookById($id);
+    public function getPostById($id);
     
     /** Adds a new book to the collection.
      * @param $book Book The book to be added - the id of the book will be set after successful insertion.
