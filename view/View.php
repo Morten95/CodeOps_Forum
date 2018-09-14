@@ -19,28 +19,7 @@ abstract Class View {
 	 */
 	public function create() {
 	    echo <<<HTML
-<!DOCTYPE html>
-<html>
-<head>
-<title>
-HTML;
-        echo $this->getPageTitle();
-		echo <<<HTML
-</title>
-</head>
 
-<body>
-<h1>
-HTML;
-        echo $this->getPageTitle();
-		echo <<<HTML
-</h1>
-HTML;
-        echo $this->getPageContent();
-		echo <<<HTML
-</body>
-</html>	
-HTML;
 		 }
 	}
 ?>
