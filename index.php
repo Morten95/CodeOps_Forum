@@ -5,7 +5,7 @@
  * @see http://php-html.net/tutorials/model-view-controller-in-php/ The tutorial code used as basis.
  */
 
-    include_once("controller/Controller.php");
+    include_once("Controller/Controller.php");
 
 	$controller = new Controller();
 	$controller->invoke();
