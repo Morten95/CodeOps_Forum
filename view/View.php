@@ -20,7 +20,6 @@ Class View {
 	public function create() {
 	    include('html/main.html');
 	    <link rel="stylesheet" href="css/main.css">
-
 		 }
 	}
 ?>

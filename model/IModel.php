@@ -7,7 +7,7 @@ abstract class IModel
     
    
     abstract public function getBookById($id);
-    
+
    
     abstract public function addBook($book);
 

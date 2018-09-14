@@ -1,6 +1,8 @@
 <?php
 
-require_once("IModel.php");
+
+include_once("Post.php");
+include_once("IModel.php");
 
 class Model extends IModel
 {

@@ -8,9 +8,11 @@ class Controller {
 
 	public function construct($model = null){
 
+
 		if($model != null){
 			$this->model = $model;
 		} else {
+
 			$this->model = new Model();
 		}
 	}
@@ -92,6 +94,7 @@ class Controller {
         }
     */
     }
+
 }
 
 ?>
