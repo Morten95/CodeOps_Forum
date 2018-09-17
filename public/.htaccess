@@ -2,7 +2,7 @@ Options -MultiViews
 RewriteEngine On
 Options -Indexes
 
-RewriteBase /CodeOps_Forum/public/
+RewriteBase /CodeOps_Forum/public
 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f

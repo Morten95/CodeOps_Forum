@@ -1,15 +1,19 @@
-<?php require_once '../app/views/includes/header.php'; ?>
+<?php include '../app/views/includes/header.php'; ?>
 <div class="container">
 This is the body of the page
 
 <?php echo var_dump($_SESSION); ?>
 
-<?php if (!(isset($_SESSION['username']))) : ?>
-   <h3>Welcome guest</h3>
-   <a href="login/index">login</a>
-   or
-   <a href="register/index">register</a>
-<?php endif; ?>
+<div id="post" class="postlist">
+		<div class="column">
+							<h2>Column 3</h2>
+									<p>Some text..</p>
+												</div>
+															<div class="column">
+																		<h2>Column 4</h2>
+																						<p>Some text..</p>
+																									</div>
+																											</div>
 
 </div>
 <?php require_once '../app/views/includes/footer.php'; ?>
