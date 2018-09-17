@@ -3,12 +3,12 @@
 This is the body of the page
 
 <?php if (!(isset($_SESSION['username']))) : ?>
-<form action="action_page.php">
-    <label for="uname"><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="uname" required>
+<form action="auth" method="POST">
+    <label><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="username" required>
 
-    <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="psw" required>
+    <label><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="password" required>
 
     <button type="submit">Login</button>
 </form>

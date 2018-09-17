@@ -2,6 +2,8 @@
 <div class="container">
 This is the body of the page
 
+<?php echo var_dump($_SESSION); ?>
+
 <?php if (!(isset($_SESSION['username']))) : ?>
    <h3>Welcome guest</h3>
    <a href="login/index">login</a>
