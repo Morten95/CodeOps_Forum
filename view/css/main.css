@@ -95,6 +95,9 @@ body {
     border: solid 0.1em;
 }
 
+.postlist h1{
+    text-align: center;
+}
 
 .postlist .column{
     background-color : #ccc;
@@ -105,3 +108,18 @@ body {
     display: inline-block;
     margin-right: 10px;
 }
+
+
+div .column a {
+    text-decoration: none;
+    color: black;
+    font-size: 29px;
+}
+
+
+div .column a:hover {
+    text-decoration: none;
+    color: black;
+    font-size: 35px;
+}
+
