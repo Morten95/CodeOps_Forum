@@ -16,6 +16,7 @@
 	  <input type="text" placeholder="password" name="password" required>
 	  <button type="submit">Login</button>
 	</form>
+	<a href="/CodeOps_Forum/index.php?register=1">register</a>
 	<?php else : ?>
  	<p>Logged in as <?php echo $_SESSION['username']; ?></p>
 	<form action="index.php" method="POST">

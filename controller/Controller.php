@@ -29,7 +29,10 @@ class Controller {
 		$latestTopics = $this->model->getLastTenTopics();
 		$view = new View();
 		
+<<<<<<< HEAD
 		$view->create("view/HomePageView.php", [$categories, $latestTopics]);
+=======
+>>>>>>> 1babe613e6be8e4b681cbef73e7e7c4982dd989f
 
 		if (isset($_POST['username']) && isset($_POST['password'])) {
 		   $user = new User($_POST['username'], $_POST['password']);
@@ -40,18 +43,38 @@ class Controller {
 		   header("Refresh:0");
 		}
 
+<<<<<<< HEAD
 		if (isset($_POST['logout'])) {
+=======
+		else if (isset($_POST['logout'])) {
+>>>>>>> 1babe613e6be8e4b681cbef73e7e7c4982dd989f
 		   session_unset();
 		   session_destroy();
 
 		   header("Refresh:0");
 		}
 
+<<<<<<< HEAD
 		if(isset($_GET['id'])) {
+=======
+		else if(isset($_GET['id'])) {
+>>>>>>> 1babe613e6be8e4b681cbef73e7e7c4982dd989f
 			$topic = $this->model->getTopicById($_GET['id']);
 			$post = $this->model->getPostByTopicId($topic->id);
 			$view->create("view/TopicPageview.php", []);
 		}
+<<<<<<< HEAD
+=======
+
+		else if(isset($_GET['register'])) {
+			$view = new View();
+			$view->create("view/register.php", []);
+		}
+
+		else { 
+			$view->create("view/HomePageView.php", [$categories, $latestTopics]);
+		}
+>>>>>>> 1babe613e6be8e4b681cbef73e7e7c4982dd989f
 	}
 }
 ?>

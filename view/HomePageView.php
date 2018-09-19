@@ -16,7 +16,11 @@
 
 This is the body of the page
 
+<<<<<<< HEAD
      <div id="post" class="postlist">
+=======
+	<div id="post" class="postlist">
+>>>>>>> 1babe613e6be8e4b681cbef73e7e7c4982dd989f
 		<h1>Recent Topics</h1>
 	<?php foreach ($data[1] as $topic) : ?>
 		<div class="column">
