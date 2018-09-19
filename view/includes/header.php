@@ -1,6 +1,7 @@
 <html>
   <head>
     <link rel="stylesheet" href="view/css/main.css">
+    <link rel="stylesheet" href="view/css/style.css">
     <link rel="stylesheet" href="view/css/bootstrap.min.css">
   </head>
   <body>
