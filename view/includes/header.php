@@ -27,5 +27,3 @@
       </div>
     </div>
     <h1>This is the header</h1>
-    
-    

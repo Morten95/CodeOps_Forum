@@ -29,7 +29,6 @@ class Controller {
 		$latestTopics = $this->model->getLastTenTopics();
 		$view = new View();
 		
-
 		if (isset($_POST['username']) && isset($_POST['password'])) {
 		   $user = new User($_POST['username'], $_POST['password']);
 
