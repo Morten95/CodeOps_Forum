@@ -3,7 +3,6 @@ include_once("model/DBModel.php");
 include_once("view/ErrorView.php");
 include_once("view/View.php");
 include_once("model/User.php");
-include_once("model/regUser.php");
 include_once("model/Category.php");
 
 /** The Controller is responsible for handling user requests, for exchanging data with the Model,
@@ -31,7 +30,7 @@ class Controller {
 		$view = new View();
 		
 		if (isset($_POST['username']) && isset($_POST['password'])) {
-		   $user = new User($_POST['username'], $_POST['password']);
+		   $user = new User($_POST['username'], $_POST['password'], "", "", "", 0, 0);
 		   if($this->model->authenticate($user)) {
 	    	        $_SESSION["username"] = $user->username;
 		   }		   	
@@ -54,13 +53,13 @@ class Controller {
 
 		// REGISTER USER:
 		else if(isset($_GET['register'])) {
-			$view->create("view/register.html", []);
+			$view->create("view/Register.php", []);
 		}
 		
 		else if (isset($_POST['reg'])) {
 				
-			$newUser = new regUser( $_POST['user'],$_POST['password_1'],$_POST['fname'], $_POST['lname'] ,$_POST['email'],0,0);
-			$this->model->regUser($newUser);
+			$newUser = new User( $_POST['user'],$_POST['password_1'],$_POST['fname'], $_POST['lname'] ,$_POST['email'],0,0);
+			$this->model->registerUser($newUser);
 		   header("Refresh:0");
 		}
 

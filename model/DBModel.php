@@ -29,33 +29,33 @@ class DBModel {
 		}}
     }
     
-      public function authenticate($user) {
+    public function authenticate($user) {
 	    $request = $this->db->prepare("SELECT * FROM User WHERE username = :username AND password = :password");
 	    $request->bindValue(':username', $user->username, PDO::PARAM_STR);
 	    $request->bindValue(':password', $user->password, PDO::PARAM_STR);
 	    $request->execute();
 	    $results = $request->fetch(PDO::FETCH_ASSOC);
+        $user->setUserData($results["email"],$results["name"],$results["surname"],$results["active"],$results["admin"]);
+        if($results) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-	if($results) {
-	    return true;
-	} else {
-	    return false;
-	    }
-      }
-
-    public function regUser($User) {
+    public function registerUser($user) {
         try {        
 
             $stmt = $this->db->prepare("INSERT INTO User(username,password,email,name,surname,active,admin) VALUES(:user,:pass,:mail,:nm,:snm,:act,:adm)");
             
             
-            $stmt->bindValue(':user', $User->username,PDO::PARAM_STR);
-            $stmt->bindValue(':pass', $User->password,PDO::PARAM_STR);
-            $stmt->bindValue(':mail', $User->email,PDO::PARAM_STR);
-            $stmt->bindValue(':nm', $User->fname,PDO::PARAM_STR);
-            $stmt->bindValue(':snm', $User->lname,PDO::PARAM_STR);
-            $stmt->bindValue(':act', 0,PDO::PARAM_INT);
-            $stmt->bindValue(':adm', 0,PDO::PARAM_INT);
+            $stmt->bindValue(':user', $user->username,PDO::PARAM_STR);
+            $stmt->bindValue(':pass', $user->password,PDO::PARAM_STR);
+            $stmt->bindValue(':mail', $user->email,PDO::PARAM_STR);
+            $stmt->bindValue(':nm', $user->fname,PDO::PARAM_STR);
+            $stmt->bindValue(':snm', $user->lname,PDO::PARAM_STR);
+            $stmt->bindValue(':act', $user->active,PDO::PARAM_INT);
+            $stmt->bindValue(':adm', $user->admin,PDO::PARAM_INT);
             
             $stmt->execute();
         }
