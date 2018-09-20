@@ -16,7 +16,8 @@
 
 This is the body of the page
 
-	<div id="post" class="postlist">
+
+	<div id="post" class="postlist"> 
 		<h1>Recent Topics</h1>
 	<?php foreach ($data[1] as $topic) : ?>
 		<div class="column">
