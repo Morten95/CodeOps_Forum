@@ -14,9 +14,10 @@
 		public $active = null;
 		public $admin  = null;
 
-		function __construct($username,$password,$email,$fname,$lname,$active, $admin)
+		function __construct($id = -1, $username,$password,$email,$fname,$lname,$active, $admin)
 		{
 			
+			$this->id = $id;
 			$this->username = $username;
 			$this->password = $password;
 			$this->email    = $email;
@@ -27,7 +28,8 @@
 
 		}
 
-		function setUserData($email, $fname, $lname, $active, $admin){
+		function setUserData($id, $email, $fname, $lname, $active, $admin){
+			$this->id    = $id;
 			$this->email    = $email;
 			$this->fname    = $fname;
 			$this->lname    = $lname;

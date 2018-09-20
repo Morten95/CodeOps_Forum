@@ -6,13 +6,13 @@ class Post {
       public $userId;
       public $topicId;
 
-      /*
-      public _construct($id, $body, $userId, $topicId){
+      
+      public function __construct($id, $body, $userId, $topicId){
       	$this->id = $id;
       	$this->body = $body;
       	$this->userId = $userId;
       	$this->topicId = $topicId;
-      }*/
+      }
 
       public function createPost($post) {
 

@@ -26,31 +26,31 @@ class Controller {
 	public function invoke() {
 		//loading front page
 		$categories = $this->model->getAllCategories();
-		//$latestTopics = $this->model->getLastTenTopics();
+		$latestTopics = $this->model->getLastTenTopics();
 		$view = new View();
-		
+
 		if (isset($_POST['username']) && isset($_POST['password'])) {
-		   $user = new User($_POST['username'], $_POST['password'], "", "", "", 0, 0);
+		   $user = new User(-1, $_POST['username'], $_POST['password'], "", "", "", 0, 0);
 		   if($this->model->authenticate($user)) {
 	    	        $_SESSION["username"] = $user->username;
 		   }		   	
 		   header("Refresh:0");
 		}
-
 		else if (isset($_POST['logout'])) {
 		   session_unset();
 		   session_destroy();
 
 		   header("Refresh:0");
 		}
-
 		else if(isset($_GET['id'])) {
 			$topic = $this->model->getTopicById($_GET['id']);
+			$topicUser = $this->model->getUserByTopic($topic->userId);
+			
 			$post = $this->model->getPostByTopicId($topic->id);
-			$view->create("view/TopicPageview.php", []);
+			$postUser = $this->model->getUserByPost($post);
+			
+			$view->create("view/TopicPageView.php", [$topic, $post, $postUser]);
 		}
-
-
 		// REGISTER USER:
 		else if(isset($_GET['register'])) {
 			$view->create("view/Register.php", []);
@@ -58,7 +58,7 @@ class Controller {
 		
 		else if (isset($_POST['reg'])) {
 				
-			$newUser = new User( $_POST['user'],$_POST['password_1'],$_POST['fname'], $_POST['lname'] ,$_POST['email'],0,0);
+			$newUser = new User(-1, $_POST['user'],$_POST['password_1'],$_POST['fname'], $_POST['lname'] ,$_POST['email'],0,0);
 			$this->model->registerUser($newUser);
 		   header("Refresh:0");
 		}
