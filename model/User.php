@@ -1,11 +1,21 @@
-<?php
+<?php 
 
-class User {
-      public $username;
-      public $password;
+	/**
+	 * 
+	 */
+	class User
+	{	
+		public $username;
+		public $password;
 
-      public function __construct($username, $password) {
-      	     $this->username = $username;
-	     $this->password = $password;
-      }
-}
+		function __construct($username,$password)
+		{
+			
+			$this->username = $username;
+			$this->password = $password;
+		}
+
+		
+	}
+
+?>

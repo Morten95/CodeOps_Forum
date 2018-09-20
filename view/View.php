@@ -19,9 +19,9 @@ Class View {
 	 */
 	public function create($filePath, $data) {
 	       //including header file
-	       include_once 'view/includes/header.php';
-	       include_once $filePath;
-	       include_once 'view/includes/footer.php';
+	       include 'view/includes/header.php';
+	       include $filePath;
+	       include 'view/includes/footer.php';
 	}
 }
 ?>

@@ -22,7 +22,7 @@ class DBModel {
 		{
         try {
             // Create PDO connection
-			$this->db = new PDO("mysql:host=localhost;dbname=database;", "root", "");
+			$this->db = new PDO("mysql:host=localhost;dbname=CodeOps_Forum;", "root", "");
 		} catch(PDOException $e) {
 			echo "Error ocurred!";
 			echo $e->getMessage();
@@ -43,7 +43,28 @@ class DBModel {
 	    }
       }
 
-    public function getLastTenTopics(){
+    public function regUser($User) {
+        try {        
+
+            $stmt = $this->db->prepare("INSERT INTO User(username,password,email,name,surname,active,admin) VALUES(:user,:pass,:mail,:nm,:snm,:act,:adm)");
+            
+            
+            $stmt->bindValue(':user', $User->username,PDO::PARAM_STR);
+            $stmt->bindValue(':pass', $User->password,PDO::PARAM_STR);
+            $stmt->bindValue(':mail', $User->email,PDO::PARAM_STR);
+            $stmt->bindValue(':nm', $User->fname,PDO::PARAM_STR);
+            $stmt->bindValue(':snm', $User->lname,PDO::PARAM_STR);
+            $stmt->bindValue(':act', 0,PDO::PARAM_INT);
+            $stmt->bindValue(':adm', 0,PDO::PARAM_INT);
+            
+            $stmt->execute();
+        }
+        catch(PDOException $e){
+            $e->getMessage(); 
+        }
+}
+
+    /*public function getLastTenTopics(){
         $topic = array();
         $stmt = $this->db->query("SELECT * FROM topic ORDER BY id DESC LIMIT 3");
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -52,7 +73,7 @@ class DBModel {
         }
 
         return $topic;
-    }
+    }*/
     
     public function getAllCategories() {
         $request = $this->db->prepare("SELECT * FROM Category");

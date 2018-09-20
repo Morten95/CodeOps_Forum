@@ -3,6 +3,7 @@ include_once("model/DBModel.php");
 include_once("view/ErrorView.php");
 include_once("view/View.php");
 include_once("model/User.php");
+include_once("model/regUser.php");
 include_once("model/Category.php");
 
 /** The Controller is responsible for handling user requests, for exchanging data with the Model,
@@ -26,13 +27,12 @@ class Controller {
 	public function invoke() {
 		//loading front page
 		$categories = $this->model->getAllCategories();
-		$latestTopics = $this->model->getLastTenTopics();
+		//$latestTopics = $this->model->getLastTenTopics();
 		$view = new View();
 		
 
 		if (isset($_POST['username']) && isset($_POST['password'])) {
 		   $user = new User($_POST['username'], $_POST['password']);
-
 		   if($this->model->authenticate($user)) {
 	    	        $_SESSION["username"] = $user->username;
 		   }		   	
@@ -52,9 +52,17 @@ class Controller {
 			$view->create("view/TopicPageview.php", []);
 		}
 
+
+		// REGISTER USER:
 		else if(isset($_GET['register'])) {
-			$view = new View();
-			$view->create("view/register.php", []);
+			$view->create("view/register.html", []);
+		}
+		
+		else if (isset($_POST['reg'])) {
+				
+			$newUser = new regUser( $_POST['user'],$_POST['password_1'],$_POST['fname'], $_POST['lname'] ,$_POST['email'],0,0);
+			$this->model->regUser($newUser);
+		   header("Refresh:0");
 		}
 
 		else { 
