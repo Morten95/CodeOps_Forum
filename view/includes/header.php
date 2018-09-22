@@ -1,7 +1,6 @@
 <html>
   <head>
     <link rel="stylesheet" href="view/css/main.css">
-    <link rel="stylesheet" href="view/css/style.css">
     <link rel="stylesheet" href="view/css/bootstrap.min.css">
   </head>
   <body>
@@ -14,12 +13,12 @@
 	<form action="index.php" method="POST">
 	  <input type="text" placeholder="username" name="username" required>
 	  <input type="text" placeholder="password" name="password" required>
+	  <a id="register" href="/CodeOps_Forum/index.php?register=1">Register</a>
 	  <button type="submit">Login</button>
 	</form>
-	<a href="/CodeOps_Forum/index.php?register=1">register</a>
 	<?php else : ?>
- 	<p>Logged in as <?php echo $_SESSION['username']; ?></p>
 	<form action="index.php" method="POST">
+ 	 <p id="LogginText">Logged in as <?php echo $_SESSION['username']; ?></p>
 	  <input type="hidden" name="logout">
 	  <button type="submit">Logout</button>
 	</form>

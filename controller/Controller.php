@@ -49,7 +49,7 @@ class Controller {
 			$post = $this->model->getPostByTopicId($topic->id);
 			$postUser = $this->model->getUserByPost($post);
 			
-			$view->create("view/TopicPageView.php", [$topic, $post, $postUser]);
+			$view->create("view/TopicPageView.php", [$topic, $topicUser, $post, $postUser, isset($_SESSION["username"])]);
 		}
 		// REGISTER USER:
 		else if(isset($_GET['register'])) {

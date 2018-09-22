@@ -103,14 +103,14 @@ class DBModel {
     }
 
     public function getUserByTopic($id){
-        $request = $this->db->prepare("SELECT * FROM Post WHERE topicId = :id");
-        $request->bindValue(':id', $id, PDO::PARAM_INT);
+        $request = $this->db->prepare("SELECT * FROM User WHERE id = :userId");
+        $request->bindValue(':userId', $id, PDO::PARAM_INT);
         $request->execute();
 
         $row = $request->fetch(PDO::FETCH_ASSOC);
         $user = new User($row["id"], $row["username"], $row["password"], $row["email"], $row["name"], $row["surname"], $row["active"], $row["admin"]);
 
-        //var_dump($user);
+        var_dump($row);
 
         return $user;
     }
@@ -132,15 +132,17 @@ class DBModel {
     public function getUserByPost($posts){
         $users = array();
         foreach ($posts as $post) {
-            $request = $this->db->prepare("SELECT * FROM User WHERE userId = :id");
+            $request = $this->db->prepare("SELECT * FROM User WHERE id = :id");
             $request->bindValue(':id', $post->id, PDO::PARAM_INT);
             $request->execute();
             
             $user = $request->fetch(PDO::FETCH_ASSOC);
 
-            $users[] = new User($user["id"],$user["username"],$user["password"],$user["email"],$user["name"],$user["surname"],$user["active"],$user["admin"]);
+            $users[] = new User($user["id"], $user["username"],$user["password"],$user["email"],$user["name"],$user["surname"],$user["active"],$user["admin"]);
 
         }
+
+        //var_dump($users);
         return $users;
     }
 }
