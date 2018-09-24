@@ -25,7 +25,7 @@ class DBModel {
         try {
             // Create PDO connection
 
-			$this->db = new PDO("mysql:host=localhost;dbname=CodeOps_database;", "root", "");
+			$this->db = new PDO("mysql:host=localhost;dbname=database;", "root", "");
 		} catch(PDOException $e) {
 			echo "Error ocurred!";
 			echo $e->getMessage();
@@ -71,10 +71,11 @@ class DBModel {
     public function getLastTenTopics(){
         $topic = array();
         $stmt = $this->db->query("SELECT * FROM topic ORDER BY id DESC LIMIT 3");
+	if($stmt) {
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
            // var_dump($row);
             $topic[] = new Topic($row["id"], $row["title"], $row["body"], $row["userId"], $row["categoryId"]);
-        }
+        }}
 
         return $topic;
     }
