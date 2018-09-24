@@ -1,16 +1,12 @@
 <div class="container">
-  
-  <?php foreach($data[0] as $category): ?>
 
-  <div class="row">
-    <div class="col-sm">
-      <?php echo $category->name; ?>
-    </div>
-  </div>
-
-  <?php endforeach; ?>
-    
-
+  <ul class="nav justify-content-center">
+    <?php foreach($data[0] as $category): ?>
+    <li class="nav-item">
+      <a class="nav-link" href="#"><?php echo $category->name; ?></a>
+    </li>
+    <?php endforeach; ?>
+  </ul>
 
 
 

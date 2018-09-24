@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 14, 2018 at 08:39 PM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 7.0.30
+-- Generation Time: Sep 24, 2018 at 04:21 PM
+-- Server version: 10.1.35-MariaDB
+-- PHP Version: 7.2.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -31,6 +31,34 @@ SET time_zone = "+00:00";
 CREATE TABLE `Category` (
   `id` int(12) NOT NULL,
   `name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Category`
+--
+
+INSERT INTO `Category` (`id`, `name`) VALUES
+(7, 'Technology'),
+(8, 'Occupation & Education'),
+(9, 'Sports'),
+(10, 'Games'),
+(11, 'Science'),
+(12, 'Culture'),
+(13, 'Society'),
+(14, 'Cars & traffic'),
+(15, 'Off topic');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Comment`
+--
+
+CREATE TABLE `Comment` (
+  `id` int(12) NOT NULL,
+  `postID` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `body` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -88,6 +116,14 @@ ALTER TABLE `Category`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `Comment`
+--
+ALTER TABLE `Comment`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `postID` (`postID`),
+  ADD KEY `userID` (`userID`);
+
+--
 -- Indexes for table `Post`
 --
 ALTER TABLE `Post`
@@ -117,17 +153,30 @@ ALTER TABLE `User`
 -- AUTO_INCREMENT for table `Category`
 --
 ALTER TABLE `Category`
+  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `Comment`
+--
+ALTER TABLE `Comment`
   MODIFY `id` int(12) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `User`
 --
 ALTER TABLE `User`
-  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `Comment`
+--
+ALTER TABLE `Comment`
+  ADD CONSTRAINT `Comment_ibfk_1` FOREIGN KEY (`postID`) REFERENCES `Post` (`id`),
+  ADD CONSTRAINT `Comment_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `User` (`id`);
 
 --
 -- Constraints for table `Post`

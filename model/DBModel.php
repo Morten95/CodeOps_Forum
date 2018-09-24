@@ -25,7 +25,7 @@ class DBModel {
         try {
             // Create PDO connection
 
-			$this->db = new PDO("mysql:host=localhost;dbname=database;", "root", "");
+			$this->db = new PDO("mysql:host=localhost;dbname=CodeOps_database;", "root", "");
 		} catch(PDOException $e) {
 			echo "Error ocurred!";
 			echo $e->getMessage();

@@ -7,7 +7,6 @@
     <div class="topnav">
       <a class="active" href="index.php">Home</a>
       
-      
       <div class="login-container">
 	<?php if (!(isset($_SESSION['username']))) : ?>
 	<form action="index.php" method="POST">
