@@ -58,7 +58,7 @@ CREATE TABLE `Comment` (
   `id` int(12) NOT NULL,
   `postID` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
-  `body` int(11) NOT NULL
+  `body` varchar(350) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -166,6 +166,19 @@ ALTER TABLE `Comment`
 --
 ALTER TABLE `User`
   MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `Topic`
+--
+ALTER TABLE `Topic`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+
+--
+-- AUTO_INCREMENT for table `Post`
+--
+ALTER TABLE `Post`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
