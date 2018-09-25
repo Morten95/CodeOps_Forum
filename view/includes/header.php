@@ -13,7 +13,7 @@
 	<?php if (!(isset($_SESSION['username']))) : ?>
 	<form action="index.php" method="POST">
 	  <input type="text" placeholder="username" name="username" required>
-	  <input type="text" placeholder="password" name="password" required>
+	 <input type="password" placeholder="password" name="password" required>
 	  <a id="register" href="/CodeOps_Forum/index.php?register=1">Register</a>
 	  <button type="submit">Login</button>
 	</form>
