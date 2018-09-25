@@ -74,7 +74,7 @@ class DBModel {
 	if($stmt) {
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
            // var_dump($row);
-            $topic[] = new Topic($row["id"], $row["title"], $row["body"], $row["userId"], $row["categoryId"]);
+            $topic[] = new Topic($row["id"], $row["title"], $row["body"], $row["userID"], $row["categoryId"]);
         }}
 
         return $topic;
@@ -100,7 +100,7 @@ class DBModel {
 
         $topicDB = $request->fetch(PDO::FETCH_ASSOC);
 
-        return new Topic($topicDB["id"], $topicDB["title"], $topicDB["body"], $topicDB["userId"], $topicDB["categoryId"]);
+        return new Topic($topicDB["id"], $topicDB["title"], $topicDB["body"], $topicDB["userID"], $topicDB["categoryId"]);
     }
 
     public function getUserByTopic($id){
