@@ -5,25 +5,25 @@
 <form class="registerForm" method="POST" action="index.php">
 	<div class="input-group">
 		<label>First name</label>
-		<input type="text" name="fname">
+		<input type="text" name="fname" maxlength="30" pattern="[A-Za-z-]+">
 		<div class="input-group">
 		<label>Last name</label>
-		<input type="text" name="lname">
+		<input type="text" name="lname" maxlength="30" pattern="[A-Za-z-]+">
 	<div class="input-group">
 		<label>Username</label>
-		<input type="text" name="user" required>
+		<input type="text" name="user" required maxlength="20" placeholder="Username123" pattern="[A-Za-z0-9_]+">
 	</div>
 	<div class="input-group">
 		<label>Email</label>
-		<input type="text" name="email" required>
+		<input type="email" name="email" required maxlength="33" placeholder="example@mail.com" pattern="^[A-Za-z0-9._-]+@[A-Za-z0-9.-]+.[A-Za-z]$"> <!-- virker ikke hundre prosent -->
 	</div>
 	<div class="input-group">
 		<label>Password</label>
-		<input type="text" name="password_1" id="password_1" required>
+		<input type="password" name="password_1" id="password_1" maxlength="30" placeholder="minimum 6 characters" pattern="[A-Za-z0-9/_.&%@-]+ .{6,30}">
 	</div>
 	<div class="input-group">
 		<label>Confirm Password</label>
-		<input type="text" name="password_2" id="password_2" required>
+		<input type="password" name="password_2" id="password_2" maxlength="30" pattern="[A-Za-z0-9/_.&%@-]+ .{6,30}">
 	</div>
 	<div class="input-group">
 	<button type="submit" name="reg" class="btn">Register</button>
