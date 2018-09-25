@@ -34,8 +34,14 @@ class Controller {
 		   $user = new User(-1, $_POST['username'], $_POST['password'], "", "", "", 0, 0);
 		   if($this->model->authenticate($user)) {
 	    	        $_SESSION["username"] = $user->username;
+	    	        header("Refresh:0");
 		   }		   	
-		   header("Refresh:0");
+		   else {
+			echo '<script>
+			alert("Wrong username or password");
+			</script>';
+			header("Refresh:0");
+		   }
 		}
 		else if (isset($_POST['logout'])) {
 		   session_unset();
