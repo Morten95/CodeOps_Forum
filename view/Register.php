@@ -11,15 +11,15 @@
 		<input type="text" name="lname" maxlength="30">
 	<div class="input-group">
 		<label>Username</label>
-		<input type="text" name="user" required maxlength="20">
+		<input type="text" name="user" required maxlength="20" placeholder="Username123">
 	</div>
 	<div class="input-group">
 		<label>Email</label>
-		<input type="text" name="email" required maxlength="33">
+		<input type="text" name="email" required maxlength="33" placeholder="example@mail.com">
 	</div>
 	<div class="input-group">
-		<label>Password (minimum 6 characters)</label>
-		<input type="password" name="password_1" id="password_1" pattern=".{6,}" maxlength="30">
+		<label>Password</label>
+		<input type="password" name="password_1" id="password_1" pattern=".{6,}" maxlength="30" placeholder="minimum 6 characters">
 	</div>
 	<div class="input-group">
 		<label>Confirm Password</label>
