@@ -63,14 +63,13 @@ class Controller {
 			$this->model->registerUser($newUser);
 		   header("Refresh:0");
 		} 
-		else if(isset($_POST['postarea'])) {
+		else if(isset($_POST['submitText'])) {
 			$user = $this->model->getUserByName($_SESSION['username']);
-echo 'zohaibsyolo';
-			if($user){
-				$post = new Post(0, $_POST['postarea'], $user->id, $_GET['id']);
-				$this->model->createPost($post);
-
-			}
+			
+			$post = new Post(0, $_POST['postarea'], $user->id, $_POST['topicId']);
+			$this->model->createPost($post);
+			$_GET['id'] = $_POST['topicId'];
+			header('Location: '. $_POST['redirect']);
 
 		}
 		else { 

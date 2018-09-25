@@ -45,10 +45,20 @@
 		<div id="post" class="postlist">
 		<?php if ($data[4]) { ?>
 			<br>
-			<form method="post" id="postTextArea" action="index.php?id=<?php echo $_GET['id'] ?>">
+			<form method="post"  action="index.php">
+    			<textarea class="area" name="postarea"></textarea>
+    			<input type="hidden" name="topicId" value=<?php echo $_GET['id']?>/>
+    			<input type="hidden" name="redirect" value=<?php echo $_SERVER['REQUEST_URI'];?>/>
+
+    			<input type="submit" value="Submit" name="submitText"/>
+			</form>
+
+			<?php //echo $_POST['postarea']?>
+		<!--	<form method="post" id="postTextArea" action="index.php?id=<?php //echo $_GET['id'] ?>">
     			<input type="submit" name="submit" value="Send" id="submit" style="float:right;margin:10px;"/>
    				<textarea form="postTextArea" class="area" id="postarea" name="postarea"></textarea>
-			</form>
+			</form> 
+		-->
 		
 		<?php	} ?>
 	
@@ -64,7 +74,7 @@
   	$(document).on('click' , 'button.rep' , function(){
      var closestDiv = $(this).closest('div'); // also you can use $(this).parent()
      if($('form.comment_reply').is(":hidden")){
-     	$('form.comment_reply').show()
+     	$('form.comment_reply').show();
      } else {
     	$('form.comment_reply').hide();
      }
@@ -73,3 +83,4 @@
   });
 });
 </script>
+
