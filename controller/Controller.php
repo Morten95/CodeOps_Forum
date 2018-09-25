@@ -4,6 +4,7 @@ include_once("view/ErrorView.php");
 include_once("view/View.php");
 include_once("model/User.php");
 include_once("model/Category.php");
+include_once("model/Topic.php");
 
 /** The Controller is responsible for handling user requests, for exchanging data with the Model,
  * and for passing user response data to the various Views. 
@@ -61,6 +62,17 @@ class Controller {
 			$newUser = new User(-1, $_POST['user'],$_POST['password_1'],$_POST['fname'], $_POST['lname'] ,$_POST['email'],0,0);
 			$this->model->registerUser($newUser);
 		   header("Refresh:0");
+		}
+
+		else if (isset($_GET['insert'])) {
+		    $view->create("view/InsertView.php", [$categories]); 
+		}
+
+		else if (isset($_POST['categoryId'])) {
+		     $userId = $this->model->getUserIdByUsername($_SESSION['username']);
+		     $topic = new Topic(0, $_POST['title'], $_POST['body'], $userId, (int)$_POST['categoryId']);
+		     $this->model->createTopic($topic);
+		     $view->create("view/HomePageView.php", [$categories, $latestTopics]);
 		}
 
 		else { 

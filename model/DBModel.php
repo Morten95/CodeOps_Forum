@@ -46,6 +46,28 @@ class DBModel {
         }
     }
 
+    public function getUserIdByUsername($username) {
+	$request = $this->db->prepare("SELECT * FROM User WHERE username = :username");
+	$request->bindValue(':username', $username, PDO::PARAM_STR);
+	$request->execute();
+	$results = $request->fetch(PDO::FETCH_ASSOC);
+	return (int)$results["id"];
+    }
+
+    public function createTopic($topic) {
+    try {
+    	   $request = $this->db->prepare("INSERT INTO Topic(title, body, userID, categoryId) VALUES(:title, :body, :userID, :categoryId)");
+            $request->bindValue(':title', $topic->title, PDO::PARAM_STR);
+            $request->bindValue(':body', $topic->body, PDO::PARAM_STR);
+            $request->bindValue(':userID', $topic->userId, PDO::PARAM_INT);
+            $request->bindValue(':categoryId', $topic->categoryId, PDO::PARAM_INT);
+            
+            $request->execute();
+	    } catch (PDOException $e) {
+	     $e->getMessage();
+	    }
+    }
+
     public function registerUser($user) {
         try {        
 

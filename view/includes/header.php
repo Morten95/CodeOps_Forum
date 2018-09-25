@@ -6,7 +6,8 @@
   <body>
     <div class="topnav">
       <a class="active" href="index.php">Home</a>
-      
+      <a href="index.php?insert=1">+Insert Topic</a>     
+
       <div class="login-container">
 	<?php if (!(isset($_SESSION['username']))) : ?>
 	<form action="index.php" method="POST">
