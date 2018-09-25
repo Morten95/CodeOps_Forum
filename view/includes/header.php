@@ -2,6 +2,8 @@
   <head>
     <link rel="stylesheet" href="view/css/main.css">
     <link rel="stylesheet" href="view/css/bootstrap.min.css">
+    <!-- Add icon library -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
     <div class="topnav">
