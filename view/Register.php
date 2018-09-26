@@ -19,11 +19,11 @@
 	</div>
 	<div class="input-group">
 		<label>Password</label>
-		<input type="password" name="password_1" id="password_1" maxlength="30" placeholder="minimum 6 characters" pattern="[A-Za-z0-9/_.&%@-]+ .{6,30}">
+		<input type="password" name="password_1" id="password_1" required maxlength="30" minlength="6" placeholder="minimum 6 characters" pattern="[A-Za-z0-9/_.&%@-]+">
 	</div>
 	<div class="input-group">
 		<label>Confirm Password</label>
-		<input type="password" name="password_2" id="password_2" maxlength="30" pattern="[A-Za-z0-9/_.&%@-]+ .{6,30}">
+		<input type="password" name="password_2" id="password_2" required maxlength="30" minlength="6" pattern="[A-Za-z0-9/_.&%@-]+">
 	</div>
 	<div class="input-group">
 	<button type="submit" name="reg" class="btn">Register</button>
