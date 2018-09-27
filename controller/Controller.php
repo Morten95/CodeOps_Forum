@@ -44,12 +44,14 @@ class Controller {
 			header("Refresh:0");
 		   }
 		}
+
 		else if (isset($_POST['logout'])) {
 		   session_unset();
 		   session_destroy();
 
 		   header("Refresh:0");
 		}
+
 		else if(isset($_GET['id'])) {
 			$topic = $this->model->getTopicById($_GET['id']);
 			$topicUser = $this->model->getUserByTopic($topic->userId);
@@ -59,6 +61,7 @@ class Controller {
 			
 			$view->create("view/TopicPageView.php", [$topic, $topicUser, $post, $postUser, isset($_SESSION["username"])]);
 		}
+
 		// REGISTER USER:
 		else if(isset($_GET['register'])) {
 			$view->create("view/Register.php", []);
@@ -66,10 +69,11 @@ class Controller {
 		
 		else if (isset($_POST['reg'])) {
 				
-			$newUser = new User(-1, $_POST['user'],$_POST['password_1'],$_POST['fname'], $_POST['lname'] ,$_POST['email'],0,0);
+			$newUser = new User(-1, $_POST['user'],$hasedpw = password_hash($_POST['password_1'], PASSWORD_DEFAULT),$_POST['email'], $_POST['fname'] ,$_POST['lname'],0,0);
 			$this->model->registerUser($newUser);
 		   header("Refresh:0");
-		} 
+		}
+
 		else if(isset($_POST['submitText'])) {
 			$user = $this->model->getUserByName($_SESSION['username']);
 
@@ -80,6 +84,7 @@ class Controller {
 			header('Location: '. $_POST['redirect']);
 
 		}
+
 		else if (isset($_GET['insert'])) {
 		    $view->create("view/InsertView.php", [$categories]); 
 		}
@@ -91,6 +96,7 @@ class Controller {
 		     $view->create("view/HomePageView.php", [$categories, $latestTopics]);
 
 		 }
+
 		else { 
 			$view->create("view/HomePageView.php", [$categories, $latestTopics]);
 		}
