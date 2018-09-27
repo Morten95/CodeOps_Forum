@@ -8,7 +8,10 @@
   <body>
     <div class="topnav">
       <a class="active" href="index.php">Home</a>
-      <a href="index.php?insert=1">+Insert Topic</a>     
+
+      <?php if (!(isset($_SESSION['username']))) : ?>
+      <a href="index.php?insert=1">+ Insert Topic</a>     
+      <?php endif; ?>
 
       <div class="login-container">
 	<?php if (!(isset($_SESSION['username']))) : ?>
