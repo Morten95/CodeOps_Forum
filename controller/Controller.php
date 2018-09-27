@@ -66,10 +66,10 @@ class Controller {
 		
 		else if (isset($_POST['reg'])) {
 				
-			$newUser = new User(-1, $_POST['user'],$_POST['password_1'],$_POST['fname'], $_POST['lname'] ,$_POST['email'],0,0);
+			$newUser = new User(-1, $_POST['user'], $hasedpw = password_hash($_POST['password_1'], PASSWORD_DEFAULT),$_POST['fname'], $_POST['lname'] ,$_POST['email'],0,0);
 			$this->model->registerUser($newUser);
 		   header("Refresh:0");
-		} 
+		}
 		else if(isset($_POST['postarea'])) {
 			$user = $this->model->getUserByName($_SESSION['username']);
 echo 'zohaibsyolo';
