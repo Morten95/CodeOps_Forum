@@ -32,12 +32,15 @@ class Controller {
 		$view = new View();
 
 		if (isset($_POST['username']) && isset($_POST['password'])) {
-		   $user = new User(-1, $_POST['username'], $_POST['password'], "", "", "", 0, 0);
-		   if($this->model->authenticate($user)) {
+		   $user = new User(-1, $_POST['username'],$_POST['password'], "", "", "", 0, 0);
+		   $data['username'] = $_POST['username'];
+		   $data['password'] = $_POST['password'];
+		   $feedback = $this->model->authenticate($user);
+
+		   if($feedback['status'] == "OK") {
 	    	        $_SESSION["username"] = $user->username;
 	    	        header("Refresh:0");
-		   }		   	
-		   else {
+		   } else {
 			echo '<script>
 			alert("Wrong username or password");
 			</script>';
@@ -69,7 +72,7 @@ class Controller {
 		
 		else if (isset($_POST['reg'])) {
 				
-			$newUser = new User(-1, $_POST['user'],$hasedpw = password_hash($_POST['password_1'], PASSWORD_DEFAULT),$_POST['email'], $_POST['fname'] ,$_POST['lname'],0,0);
+			$newUser = new User(-1, $_POST['user'],password_hash($_POST['password_1'], PASSWORD_DEFAULT),$_POST['email'], $_POST['fname'] ,$_POST['lname'],0,0);
 			$this->model->registerUser($newUser);
 		   header("Refresh:0");
 		}

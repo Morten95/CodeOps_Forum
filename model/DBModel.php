@@ -33,17 +33,29 @@ class DBModel {
     }
     
     public function authenticate($user) {
-	    $request = $this->db->prepare("SELECT * FROM User WHERE username = :username AND password = :password");
-	    $request->bindValue(':username', $user->username, PDO::PARAM_STR);
-	    $request->bindValue(':password', $user->password, PDO::PARAM_STR);
-	    $request->execute();
-	    $results = $request->fetch(PDO::FETCH_ASSOC);
-        $user->setUserData($results["id"], $results["email"],$results["name"],$results["surname"],$results["active"],$results["admin"]);
-        if($results) {
-            return true;
-        } else {
-            return false;
+        $data= [];
+
+        try {
+            $request = $this->db->prepare("SELECT * FROM User WHERE username = :username");
+            $request->bindValue(':username', $user->username, PDO::PARAM_STR);
+            $request->execute();
+            $results = $request->fetch(PDO::FETCH_ASSOC);
+            $user->setUserData($results["id"], $results["email"],$results["name"],$results["surname"],$results["active"],$results["admin"]);
+            //var_dump($results['password']);
+            if(password_verify($user->password, $results['password'])) {
+                $data['status'] = "OK";
+            } else {
+                $data['status'] = "FAIL";
+                $data['plain_pass'] = $user->password;
+                $data['hash_pass_db'] = $results['password'];
+            }
+        } catch(Exception $error){
+            // Dont use in production, just for testing.
+            $data['status'] = "FAIL";
+            $data['errorMessage'] = 'Something failed with the query';
+            $data['errorInfo'] = $request->errorInfo();
         }
+	    return $data;
     }
 
     public function getUserIdByUsername($username) {
@@ -72,8 +84,7 @@ class DBModel {
         try {        
 
             $stmt = $this->db->prepare("INSERT INTO User(username,password,email,name,surname,active,admin) VALUES(:user,:pass,:mail,:nm,:snm,:act,:adm)");
-            
-            
+
             $stmt->bindValue(':user', $user->username,PDO::PARAM_STR);
             $stmt->bindValue(':pass', $user->password,PDO::PARAM_STR);
             $stmt->bindValue(':mail', $user->email,PDO::PARAM_STR);
@@ -81,6 +92,7 @@ class DBModel {
             $stmt->bindValue(':snm', $user->lname,PDO::PARAM_STR);
             $stmt->bindValue(':act', $user->active,PDO::PARAM_INT);
             $stmt->bindValue(':adm', $user->admin,PDO::PARAM_INT);
+
             
             $stmt->execute();
             $user->id = $this->db->lastInsertId();
