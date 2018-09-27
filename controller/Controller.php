@@ -70,13 +70,16 @@ class Controller {
 			$this->model->registerUser($newUser);
 		   header("Refresh:0");
 		} 
-		else if(isset($_POST['postarea'])) {
+		else if(isset($_POST['submitText'])) {
 			$user = $this->model->getUserByName($_SESSION['username']);
-echo 'zohaibsyolo';
-			if($user){
-				$post = new Post(0, $_POST['postarea'], $user->id, $_GET['id']);
-				$this->model->createPost($post);
-}}
+
+
+			$post = new Post(0, $_POST['postarea'], $user->id, $_POST['topicId']);
+			$this->model->createPost($post);
+			$_GET['id'] = $_POST['topicId'];
+			header('Location: '. $_POST['redirect']);
+
+		}
 		else if (isset($_GET['insert'])) {
 		    $view->create("view/InsertView.php", [$categories]); 
 		}
@@ -86,8 +89,8 @@ echo 'zohaibsyolo';
 		     $topic = new Topic(0, $_POST['title'], $_POST['body'], $userId, (int)$_POST['categoryId']);
 		     $this->model->createTopic($topic);
 		     $view->create("view/HomePageView.php", [$categories, $latestTopics]);
-		}
 
+		 }
 		else { 
 			$view->create("view/HomePageView.php", [$categories, $latestTopics]);
 		}

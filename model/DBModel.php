@@ -92,7 +92,7 @@ class DBModel {
 
     public function getLastTenTopics(){
         $topic = array();
-        $stmt = $this->db->query("SELECT * FROM topic ORDER BY id DESC LIMIT 3");
+        $stmt = $this->db->query("SELECT * FROM Topic ORDER BY id DESC LIMIT 3");
 	if($stmt) {
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
            // var_dump($row);
@@ -152,7 +152,7 @@ class DBModel {
         $users = array();
         foreach ($posts as $post) {
             $request = $this->db->prepare("SELECT * FROM User WHERE id = :id");
-            $request->bindValue(':id', $post->id, PDO::PARAM_INT);
+            $request->bindValue(':id', $post->userId, PDO::PARAM_INT);
             $request->execute();
             
             $user = $request->fetch(PDO::FETCH_ASSOC);
@@ -168,23 +168,22 @@ class DBModel {
      public function createPost($post) {
 
         $request = $this->db->prepare("INSERT INTO Post(body, userId, topicId) VALUE(:body, :userId, :topicId)");
-        $request->bindValue(':body', $this->body, PDO::PARAM_STR);
-        $request->bindValue(':userId', $this->userId, PDO::PARAM_INT);
-        $request->bindValue(':topicId', $this->topicId, PDO::PARAM_INT);
+        $request->bindValue(':body', $post->body, PDO::PARAM_STR);
+        $request->bindValue(':userId', $post->userId, PDO::PARAM_INT);
+        $request->bindValue(':topicId', $post->topicId, PDO::PARAM_INT);
         $request->execute();
    
     }
 
     public function getUserByName($userName){
         $request = $this->db->prepare("SELECT * FROM User WHERE username = :username");
-        $request->bindValue(':username', $userName, PDO::PARAM_INT);
+        $request->bindValue(':username', $userName, PDO::PARAM_STR);
         $request->execute();
-        $result = $request->fetch(PDO::FETCH_ASSOC);
-        if($result)
-            return new User($result["id"], $result["username"], $result["password"], $result["email"], $result["name"], $result["surname"], $result["active"], $result["admin"]);
+        $row = $request->fetch(PDO::FETCH_ASSOC);
+        if($row)
+            return new User($row["id"], $row["username"], $row["password"], $row["email"], $row["name"], $row["surname"], $row["active"], $row["admin"]);
         else 
             return null;
-        
     }
 }
 ?>
