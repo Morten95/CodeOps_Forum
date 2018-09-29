@@ -3,6 +3,8 @@
 include("Topic.php");
 include("Post.php");
 include("User.php");
+include("Comment.php");
+
 /** The Model is the class holding data about a collection of books. 
  * @author Rune Hjelsvold
  * @see http://php-html.net/tutorials/model-view-controller-in-php/ The tutorial code used as basis.
@@ -148,6 +150,41 @@ class DBModel {
         return $post;
     }
 
+    public function getCommentByPostId($postArray){
+        $comment = array();
+        foreach ($postArray as $post){
+            $stmt = $this->db->prepare("SELECT * FROM Comment WHERE postID = :id");
+            //var_dump($post);
+            $stmt->bindValue(':id', $post->id, PDO::PARAM_INT);
+            $stmt->execute();
+            //var_dump($stmt);
+
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $comment[] = new Comment($row['id'], $row['postID'], $row['userID'], $row['body']);
+            }
+        }
+
+        return $comment;
+    }
+
+
+    public function getUserByComment($comments){
+        $users = array();
+        foreach ($comments as $comment) {
+            $stmt = $this->db->prepare("SELECT * FROM User WHERE id = :id");
+            var_dump($comment);
+            $stmt->bindValue(':id', $comment->userID, PDO::PARAM_INT);
+            $stmt->execute();
+        
+            while($user = $stmt->fetch(PDO::FETCH_ASSOC)){
+                $users[] = new User($user["id"], $user["username"],$user["password"],$user["email"],$user["name"],$user["surname"],$user["active"],$user["admin"]);
+            }
+        }
+        return $users;
+    }
+
+    
+
     public function getUserByPost($posts){
         $users = array();
         foreach ($posts as $post) {
@@ -160,20 +197,27 @@ class DBModel {
             $users[] = new User($user["id"], $user["username"],$user["password"],$user["email"],$user["name"],$user["surname"],$user["active"],$user["admin"]);
 
         }
-
         //var_dump($users);
         return $users;
     }
 
      public function createPost($post) {
 
-        $request = $this->db->prepare("INSERT INTO Post(body, userId, topicId) VALUE(:body, :userId, :topicId)");
+        $request = $this->db->prepare("INSERT INTO Post(body, userId, topicId) VALUES(:body, :userId, :topicId)");
         $request->bindValue(':body', $post->body, PDO::PARAM_STR);
         $request->bindValue(':userId', $post->userId, PDO::PARAM_INT);
         $request->bindValue(':topicId', $post->topicId, PDO::PARAM_INT);
-        $request->execute();
-   
+        $request->execute();  
     }
+
+    public function createComment($comment) {
+
+        $request = $this->db->prepare("INSERT INTO Comment(postID, userID, body) VALUES(:postId, :userId, :body)");
+        $request->bindValue(':postId', $comment->postID, PDO::PARAM_INT);
+        $request->bindValue(':userId', $comment->userID, PDO::PARAM_INT);
+        $request->bindValue(':body', $comment->body, PDO::PARAM_STR);
+        $request->execute();  
+   }
 
     public function getUserByName($userName){
         $request = $this->db->prepare("SELECT * FROM User WHERE username = :username");

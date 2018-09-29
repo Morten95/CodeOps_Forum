@@ -6,6 +6,7 @@ include_once("model/User.php");
 include_once("model/Category.php");
 include_once("model/Topic.php");
 include_once("model/Post.php");
+include_once("model/Comment.php");
 
 /** The Controller is responsible for handling user requests, for exchanging data with the Model,
  * and for passing user response data to the various Views. 
@@ -56,8 +57,14 @@ class Controller {
 			
 			$post = $this->model->getPostByTopicId($topic->id);
 			$postUser = $this->model->getUserByPost($post);
+
+			// Fetch comments of posts
+			$comments = $this->model->getCommentByPostId($post);
 			
-			$view->create("view/TopicPageView.php", [$topic, $topicUser, $post, $postUser, isset($_SESSION["username"])]);
+			// Fetch user of comments of POSTS
+			$userComments = $this->model->getUserByComment($comments);
+		
+			$view->create("view/TopicPageView.php", [$topic, $topicUser, $post, $postUser, isset($_SESSION["username"]), $comments, $userComments]);
 		}
 		// REGISTER USER:
 		else if(isset($_GET['register'])) {
@@ -82,6 +89,17 @@ class Controller {
 		}
 		else if (isset($_GET['insert'])) {
 		    $view->create("view/InsertView.php", [$categories]); 
+		}
+			// COMMENT
+		else if (isset($_POST['sub_comment'])){
+			$user = $this->model->getUserByName($_SESSION['username']);
+
+			$comment = new Comment(0, $_POST['test'], $user->id, $_POST['post_rep']);
+			var_dump($comment);
+			$this->model->createComment($comment);
+			$_GET['id'] = $_POST['topicId'];
+			header('Location: ' . $_POST['redirect123']);
+
 		}
 
 		else if (isset($_POST['categoryId'])) {

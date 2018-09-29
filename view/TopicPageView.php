@@ -1,3 +1,4 @@
+
 <?php
 
 ?>
@@ -13,8 +14,8 @@
 		<p><?php echo $data[0]->body ?></p>
 	</div>
 
-	<div>
-		<?php array_map(function($v1, $v2){  ?>
+	<div>					<!---//v3 v4--->
+		<?php array_map(function($v1, $v2) use ($data) {  ?>  
 
 		<div id="post" class="postlist">
 			<div class="userBox">
@@ -32,14 +33,48 @@
 			</div>
 			<p><?php echo $v1->body; ?> </p>
 			
-			<form class="comment_reply" data-id="" method="post" action="">
-    			<input type="hidden" class="hidden" value="" class="post_id">
-    			<textarea class="form-control" rows="3" name="post_rep" class="post_rep"></textarea>
-    			<button type="submit" class="btn btn-primary" class="post_rep_sub">Submit</button>
+    		
+
+    			<?php if($data[5]) { ?>
+		    		<div class="comment_body" style="display: block";>    <!--- FOR EACH POST I PRINT THE COMMENT & USERNAME ! -->
+		    			<?php foreach ($data[5] as $com) { ?>
+		    				<?php if ($v1->id == $com->postID) {  ?>
+		    					<hr id="ZohaibStyle" >
+		    					<?php foreach ($data[6] as $user) {  // Inne i user--> 
+		    						if ($com->userID == $user->id) { ?>
+		    					
+		    					
+		    							<!--- *** I HAVE NO IDEA WHY THIS WORK?! *** --->
+		    						
+		    				
+		    						<?php }?>
+		    					<?php } ?>
+		    					<span> 
+		    						<small> <!-- Inne i POST-->
+		    					<?php echo $user->username . ": " . $com->body . "<br>"; ?>
+		    								</small>
+		    				</span> 
+		    			<?php } ?>
+	    			<?php } ?>
+	    			</div>
+    			<?php } ?>
+			
+			<?php if ($data[4]) {  ?>
+
+			<form class="comment_reply" data-id="" method="post" action="index.php">
+    			<textarea class="form-control" rows="2" name="post_rep" ></textarea>
+    			<input type="hidden" class="hidden" name="test" class="post_id" value=<?php echo $v1->id?>/>
+    			<button type="submit" name="sub_comment" class="btn btn-primary" class="post_rep_sub">Submit</button>
+    			<input type="hidden" name="redirect123" value=<?php echo $_SERVER['REQUEST_URI'];?>/>
     		</form>
 
+    		<div id="comment" class="comment_reply">
+
+    		<?php } ?>
+
+    		</div>
 		</div>
-		<?php }, $data[2], $data[3]); ?>
+		<?php }, $data[2], $data[3]) ?>
 
 					
 		<div id="post" class="postlist">
