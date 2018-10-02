@@ -9,7 +9,7 @@
     <div class="topnav">
       <a class="active" href="index.php">Home</a>
 
-      <?php if (!(isset($_SESSION['username']))) : ?>
+      <?php if ((isset($_SESSION['username']))) : ?>
       <a href="index.php?insert=1">+ Insert Topic</a>     
       <?php endif; ?>
 
