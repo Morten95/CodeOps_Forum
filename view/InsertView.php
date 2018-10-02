@@ -16,7 +16,7 @@
   </div>
   <div class="form-group">
     <label>Text</label>
-    <textarea class="form-control" rows="3" name="body" required maxlength="500" minlength="1"></textarea>
+    <textarea class="form-control" rows="3" name="body" required maxlength="500" minlength="1" pattern="(?![\s]+$).*$" ></textarea>
   </div>
   <button type="submit" class="btn btn-primary">Post</button>
 </form>
