@@ -8,7 +8,9 @@
   <body>
     <div class="topnav">
       <a class="active" href="index.php">Home</a>
-      
+
+
+
       <div class="login-container">
 	<?php if (!(isset($_SESSION['username']))) : ?>
 	<form action="index.php" method="POST">
@@ -23,7 +25,18 @@
 	  <input type="hidden" name="logout">
 	  <button type="submit">Logout</button>
 	</form>
+
 	<?php endif; ?>
       </div>
     </div>
+
+
+    <p><body>
+       <p>You  may search in whole database</p>
+        <form method="post" action="/CodeOps_Forum/view/SearchResults.php">
+          <input type="text" name="Search">
+          <input type="submit"><br>
+        </form>
+     </body>
+
     <h1>This is the header</h1>

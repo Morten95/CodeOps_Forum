@@ -3,20 +3,20 @@
 include("Topic.php");
 include("Post.php");
 include("User.php");
-/** The Model is the class holding data about a collection of books. 
+/** The Model is the class holding data about a collection of books.
  * @author Rune Hjelsvold
  * @see http://php-html.net/tutorials/model-view-controller-in-php/ The tutorial code used as basis.
  */
-class DBModel {        
+class DBModel {
     /**
       * The PDO object for interfacing the database
       *
       */
-    protected $db = null;  
-    
-    public function __construct($db = null)  
-    {  
-	    if ($db) 
+    protected $db = null;
+
+    public function __construct($db = null)
+    {
+	    if ($db)
 		{
 			$this->db = $db;
 		}
@@ -31,7 +31,7 @@ class DBModel {
 			echo $e->getMessage();
 		}}
     }
-    
+
     public function authenticate($user) {
 	    $request = $this->db->prepare("SELECT * FROM User WHERE username = :username AND password = :password");
 	    $request->bindValue(':username', $user->username, PDO::PARAM_STR);
@@ -47,11 +47,11 @@ class DBModel {
     }
 
     public function registerUser($user) {
-        try {        
+        try {
 
             $stmt = $this->db->prepare("INSERT INTO User(username,password,email,name,surname,active,admin) VALUES(:user,:pass,:mail,:nm,:snm,:act,:adm)");
-            
-            
+
+
             $stmt->bindValue(':user', $user->username,PDO::PARAM_STR);
             $stmt->bindValue(':pass', $user->password,PDO::PARAM_STR);
             $stmt->bindValue(':mail', $user->email,PDO::PARAM_STR);
@@ -59,12 +59,12 @@ class DBModel {
             $stmt->bindValue(':snm', $user->lname,PDO::PARAM_STR);
             $stmt->bindValue(':act', $user->active,PDO::PARAM_INT);
             $stmt->bindValue(':adm', $user->admin,PDO::PARAM_INT);
-            
+
             $stmt->execute();
             $user->id = $this->db->lastInsertId();
         }
         catch(PDOException $e){
-            $e->getMessage(); 
+            $e->getMessage();
         }
 }
 
@@ -79,7 +79,7 @@ class DBModel {
 
         return $topic;
     }
-    
+
     public function getAllCategories() {
         $request = $this->db->prepare("SELECT * FROM Category");
         $request->execute();
@@ -88,7 +88,7 @@ class DBModel {
 
         while($row = $request->fetch(PDO::FETCH_ASSOC)) {
            $results[] = new Category($row['id'], $row['name']);
-        }	
+        }
         return $results;
     }
 
@@ -113,7 +113,7 @@ class DBModel {
 
         return $user;
     }
-    
+
     public function getPostByTopicId($id){
         $post = array();
         $stmt = $this->db->prepare("SELECT * FROM Post WHERE topicId = :id");
@@ -132,7 +132,7 @@ class DBModel {
             $request = $this->db->prepare("SELECT * FROM User WHERE id = :id");
             $request->bindValue(':id', $post->id, PDO::PARAM_INT);
             $request->execute();
-            
+
             $user = $request->fetch(PDO::FETCH_ASSOC);
 
             $users[] = new User($user["id"], $user["username"],$user["password"],$user["email"],$user["name"],$user["surname"],$user["active"],$user["admin"]);
@@ -150,7 +150,7 @@ class DBModel {
         $request->bindValue(':userId', $this->userId, PDO::PARAM_INT);
         $request->bindValue(':topicId', $this->topicId, PDO::PARAM_INT);
         $request->execute();
-   
+
     }
 
     public function getUserByName($userName){
@@ -160,9 +160,36 @@ class DBModel {
         $result = $request->fetch(PDO::FETCH_ASSOC);
         if($result)
             return new User($result["id"], $result["username"], $result["password"], $result["email"], $result["name"], $result["surname"], $result["active"], $result["admin"]);
-        else 
+        else
             return null;
-        
+
     }
+
+
+public function searchTopics($topics){
+        $allTopics = array();
+        $request = $this->db->prepare("SELECT * FROM Topic WHERE LIKE '%$topics%'");
+//       $request->bindValue(':id', $post->id, PDO::PARAM_INT);
+        $request->execute();
+
+        $allTopics = $request->fetch(PDO::FETCH_ASSOC);
+
+
+    //var_dump($users);
+    return $allTopics;
+}
+
+// public function searchDB($colum,$table,$search_keyword){
+//         $sql_search_fields = $colum . " LIKE ('%" . $search_keyword . "%')";
+//         $sql_search = "SELECT * FROM " . $table . " WHERE " . $sql_search_fields;
+//
+//         $request = $this->db->query($sql_search);
+// //       $request->bindValue(':id', $post->id, PDO::PARAM_INT);
+//         $request->execute();
+//
+//         $rs3 = $request->fetch(PDO::FETCH_ASSOC);
+
+//     return $rs3;
+// }
 }
 ?>
