@@ -22,8 +22,8 @@
       <div class="login-container">
 	<?php if (!(isset($_SESSION['username']))) : ?>
 	<form action="index.php" method="POST">
-	  <input type="text" placeholder="username" name="username" required maxlength="20" pattern="[A-Za-z0-9_]+">
-	 <input type="password" placeholder="password" name="password" required maxlength="33" pattern="[A-Za-z0-9/_.&%@-]+">
+	  <input type="text" placeholder="username" name="username">
+	 <input type="password" placeholder="password" name="password">
 	  <a id="register" href="/CodeOps_Forum/index.php?register=1">Register</a>
 	  <button type="submit">Login</button>
 	</form>

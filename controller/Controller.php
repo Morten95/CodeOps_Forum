@@ -42,14 +42,24 @@ class Controller {
 
 		if (isset($_POST['username']) && isset($_POST['password'])) {
 		   $user = new User(-1, $_POST['username'],$_POST['password'], "", "", "", 0, 0);
-		   $data['username'] = $_POST['username'];
-		   $data['password'] = $_POST['password'];
+		   $data['username'] = sanitize($_POST['username']);
+		   $data['password'] = sanitize($_POST['password']);
 		   $feedback = $this->model->authenticate($user);
 
 		   if($feedback['status'] == "OK") {
 	    	        $_SESSION["username"] = $user->username;
 	    	        header("Refresh:0");
-		   } else {
+		   }
+
+		   else if (!preg_match("/^[a-zA-Z0-9_]*$/",$data['username'])) {
+		   	echo "Unallowed characters entered";
+		   }
+
+		   else if (!preg_match("/^[a-zA-Z0-9#%&!$?+.,_\/-]*$/",$data['password'])) {
+		   	echo "Unallowed characters entered";
+		   }
+
+		   else {
 			echo '<script>
 			alert("Wrong username or password");
 			</script>';
