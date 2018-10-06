@@ -53,6 +53,14 @@ class DBModel {
 	    return $data;
     }
 
+    public function deleteTopic($id) {
+            $request = $this->db->prepare("DELETE FROM Topic WHERE ");
+            $request->bindValue(':username', $user->username, PDO::PARAM_STR);
+            $request->execute();
+DELETE FROM Customers
+WHERE CustomerName='Alfreds Futterkiste';
+    }
+
     public function getUserIdByUsername($username) {
 	$request = $this->db->prepare("SELECT * FROM User WHERE username = :username");
 	$request->bindValue(':username', $username, PDO::PARAM_STR);
