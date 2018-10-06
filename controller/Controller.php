@@ -42,14 +42,24 @@ class Controller {
 
 		if (isset($_POST['username']) && isset($_POST['password'])) {
 		   $user = new User(-1, $_POST['username'],$_POST['password'], "", "", "", 0, 0);
-		   $data['username'] = $_POST['username'];
-		   $data['password'] = $_POST['password'];
+		   $data['username'] = sanitize($_POST['username']);
+		   $data['password'] = sanitize($_POST['password']);
 		   $feedback = $this->model->authenticate($user);
 
 		   if($feedback['status'] == "OK") {
 	    	        $_SESSION["username"] = $user->username;
 	    	        header("Refresh:0");
-		   } else {
+		   }
+
+		   else if (!preg_match("/^[a-zA-Z0-9_]*$/",$data['username'])) {
+		   	echo "Unallowed characters entered";
+		   }
+
+		   else if (!preg_match("/^[a-zA-Z0-9#%&!$?+.,_\/-]*$/",$data['password'])) {
+		   	echo "Unallowed characters entered";
+		   }
+
+		   else {
 			echo '<script>
 			alert("Wrong username or password");
 			</script>';
@@ -77,7 +87,11 @@ class Controller {
 			// Fetch user of comments of POSTS
 			$userComments = $this->model->getUserByComment($comments);
 			
-			$loggedUser = $this->model->getUserByName($_SESSION["username"]);
+			if(isset($_SESSION["username"])){
+				$loggedUser = $this->model->getUserByName($_SESSION["username"]);
+			} else {
+				$loggedUser = null;	 
+			}
 
 			$view->create("view/TopicPageView.php", [$topic, $topicUser, $post, $postUser, isset($_SESSION["username"]), $comments, $userComments, $loggedUser]);
 		}
@@ -193,7 +207,7 @@ class Controller {
 
 		else if (isset($_GET['category'])) {
 			$topics = $this->model->getAllTopicsById($_GET['category']);
-			$view->create("view/TopicView.php", [$topics]);
+			$view->create("view/TopicView.php", [$topics, isset($_SESSION["username"])]);
 		}
 
 		else if (isset($_POST['topicIdd'])) {
