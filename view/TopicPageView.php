@@ -1,5 +1,5 @@
 <div class="container">
-  
+
 
 	<div class="postlist">
 		<h1><?php echo $data[0]->title ?>	</h1>
@@ -10,15 +10,15 @@
 		<p><?php echo $data[0]->body ?></p>
 	</div>
 
-	
-	<?php array_map(function($v1, $v2, $postIndex) use ($data) {  ?>  
+
+	<?php array_map(function($v1, $v2, $postIndex) use ($data) {  ?>
 	<div id="post" class="postlist">
 		<div class="userBox">
 			<p><?php echo "User: " . $v2->username; echo "<br>";?> </p>
 			<p><?php echo "Admin: ";  if($v2->admin) { echo "Yes";} else { echo "No";} ?> </p>
 
 			<form method="POST">
-				
+
 			</form>
 			<div>
 				<?php if($data[7] && $data[7]->admin) { ?>
@@ -32,17 +32,17 @@
 					</form>
 
 					<button type="button" class="btn btn-primary rep" data-id="<?php echo $postIndex; ?>"><i class="fa fa-reply"></i>
-						 
+
 					</button>
 					<?php } else {?>
-						<button style="margin-left:43%" type="button" class="btn btn-primary rep" data-id="<?php echo $postIndex; ?>"><i class="fa fa-reply"></i> 
+						<button style="margin-left:43%" type="button" class="btn btn-primary rep" data-id="<?php echo $postIndex; ?>"><i class="fa fa-reply"></i>
 						</button>
 				<?php } ?>
 					<!--<button type="button" class="btn btn-primary rep" data-id="">Reply</button> -->
 			</div>
 
 
-				
+
 		</div>
 		<p><?php echo $v1->body; ?> </p>
 			<?php if($data[5]) { ?>
@@ -62,24 +62,24 @@
 		   							<button type="submit" class="btn btn-danger delCom" name="deleteComment" data-id=""><i class="fa fa-trash"></i></button>
 
 								</form>
-	    									
+
 	    					<?php }?>
 
-	    					<?php foreach ($data[6] as $user) {  // Inne i user--> 
+	    					<?php foreach ($data[6] as $user) {  // Inne i user-->
 	    						if ($com->userID == $user->id) { ?>
-									<span> 
+									<span>
 	    								<small>
-	    									<?php echo $user->username . ": "; break; ?>	
-	    				
+	    									<?php echo $user->username . ": "; break; ?>
+
 	    						<?php }?>
 	    					<?php } ?>
 	    								<?php echo $com->body . "<br>"; ?>
-	    									
+
 
 	    								</small>
 
-	    							
-	    							</span> 
+
+	    							</span>
 
 	    				<?php } ?>
     				<?php } ?>
@@ -102,7 +102,7 @@
 	<?php }, $data[2], $data[3], array_keys($data[2])) ?>
 
 
-				
+
 	<div id="post" class="postlist">
 	<?php if ($data[4]) { ?>
 		<br>
@@ -118,9 +118,9 @@
 	<!--	<form method="post" id="postTextArea" action="index.php?id=<?php //echo $_GET['id'] ?>">
 			<input type="submit" name="submit" value="Send" id="submit" style="float:right;margin:10px;"/>
 				<textarea form="postTextArea" class="area" id="postarea" name="postarea"></textarea>
-		</form> 
+		</form>
 	-->
-	
+
 	<?php	} ?>
 
 	</div>
@@ -131,19 +131,18 @@
 <script type="text/javascript">
 
 for (var i = 0; i <= <?php echo count($data[2]); ?> - 1; i++) {
-		
+
     	$("form.comment_reply").hide();
-	
+
 		$(document).ready(function(){
 	  		$(document).on("click" , "button.rep" , function(){
 	  			if($(this).data("id") == $(this).parents().children().closest("form.comment_reply").data("id") && $(this).parents().children().closest("form.comment_reply").is(":hidden")){
-		     		$(this).parents().children().closest("form.comment_reply").show();	
+		     		$(this).parents().children().closest("form.comment_reply").show();
 	  			} else {
-		     		$(this).parents().children().closest("form.comment_reply").hide();	
+		     		$(this).parents().children().closest("form.comment_reply").hide();
 	  			}
   		});
 	});
 }
 
 </script>
-

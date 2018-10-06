@@ -7,9 +7,10 @@ include_once("model/Category.php");
 include_once("model/Topic.php");
 include_once("model/Post.php");
 include_once("model/Comment.php");
+//include_once("view/SearchResults.php");
 
 /** The Controller is responsible for handling user requests, for exchanging data with the Model,
- * and for passing user response data to the various Views. 
+ * and for passing user response data to the various Views.
  * @author Rune Hjelsvold
  * @see model/Model.php The Model class holding book data.
  * @see view/viewbook.php The View class displaying information about one book.
@@ -26,12 +27,12 @@ function sanitize($data) {
 
 class Controller {
 	public $model;
-	
-	public function __construct() {  
+
+	public function __construct() {
 	       session_start();
 	       $this->model = new DBModel();
-	} 
-	
+	}
+
 /** The one function running the controller code.
  */
 	public function invoke() {
@@ -77,20 +78,20 @@ class Controller {
 		else if(isset($_GET['id'])) {
 			$topic = $this->model->getTopicById($_GET['id']);
 			$topicUser = $this->model->getUserByTopic($topic->userId);
-			
+
 			$post = $this->model->getPostByTopicId($topic->id);
 			$postUser = $this->model->getUserByPost($post);
 
 			// Fetch comments of posts
 			$comments = $this->model->getCommentByPostId($post);
-			
+
 			// Fetch user of comments of POSTS
 			$userComments = $this->model->getUserByComment($comments);
-			
+
 			if(isset($_SESSION["username"])){
 				$loggedUser = $this->model->getUserByName($_SESSION["username"]);
 			} else {
-				$loggedUser = null;	 
+				$loggedUser = null;
 			}
 
 			$view->create("view/TopicPageView.php", [$topic, $topicUser, $post, $postUser, isset($_SESSION["username"]), $comments, $userComments, $loggedUser]);
@@ -100,7 +101,7 @@ class Controller {
 		else if(isset($_GET['register'])) {
 			$view->create("view/Register.php", []);
 		}
-		
+
 		else if (isset($_POST['reg'])) {
 
 			$userErr = "";
@@ -174,12 +175,12 @@ class Controller {
 		}
 
 		else if (isset($_GET['insert'])) {
-		    $view->create("view/InsertView.php", [$categories]); 
+		    $view->create("view/InsertView.php", [$categories]);
 		}
 			// COMMENT
 		else if (isset($_POST['sub_comment'])){
-			$user = $this->model->getUserByName($_SESSION['username']); 
-		
+			$user = $this->model->getUserByName($_SESSION['username']);
+
 			$comment = new Comment(0, $_POST['test'], $user->id, filter_var(sanitize($_POST['post_rep']), FILTER_SANITIZE_STRING));
 			$this->model->createComment($comment);
 			$_GET['id'] = $_POST['topicId'];
@@ -193,30 +194,37 @@ class Controller {
 		     $this->model->createTopic($topic);
 		     $view->create("view/HomePageView.php", [$categories, $latestTopics]);
 
+		 }else if (isset($_GET['search'])) {
+			 $searchKeyword = $_POST["Search"];
+			 $topic = $this->model->getTopicSearchResults($searchKeyword);
+			 $post = $this->model->getPostSearchResults($searchKeyword);
+			 $comment = $this->model->getCommentSearchResults($searchKeyword);
+
+			 $view->create("view/SearchResults.php", [$searchKeyword, $topic, $post, $comment]);
+
+		 }
+		 else if (isset($_POST['deletePost'])){
+			 $this->model->deletePostById(str_replace("/","",$_POST["postId"]));
+			 header('Location: ' . $_POST['redirect']);
 		 }
 
-		else if (isset($_POST['deletePost'])){
-			$this->model->deletePostById(str_replace("/","",$_POST["postId"]));
-			header('Location: ' . $_POST['redirect']);
-		} 
+		 else if (isset($_POST['deleteComment'])){
+			 $this->model->deleteCommentById(str_replace("/","",$_POST["commentId"]));
+			 header('Location: ' . $_POST['redirect']);
+		 }
 
-		else if (isset($_POST['deleteComment'])){
-			$this->model->deleteCommentById(str_replace("/","",$_POST["commentId"]));
-			header('Location: ' . $_POST['redirect']);
-		} 
+		 else if (isset($_GET['category'])) {
+			 $topics = $this->model->getAllTopicsById($_GET['category']);
+			 $view->create("view/TopicView.php", [$topics, isset($_SESSION["username"])]);
+		 }
 
-		else if (isset($_GET['category'])) {
-			$topics = $this->model->getAllTopicsById($_GET['category']);
-			$view->create("view/TopicView.php", [$topics, isset($_SESSION["username"])]);
-		}
+		 else if (isset($_POST['topicIdd'])) {
+			 $this->model->deleteTopicById($_POST['topicIdd']);
+			 $view->create("view/HomePageView.php", [$categories, $latestTopics]);
+				 header("Refresh:0");
+		 }
 
-		else if (isset($_POST['topicIdd'])) {
-			$this->model->deleteTopicById($_POST['topicIdd']);
-			$view->create("view/HomePageView.php", [$categories, $latestTopics]);
-		   	header("Refresh:0");
-		}
-
-		else { 
+		else {
 			$view->create("view/HomePageView.php", [$categories, $latestTopics]);
 		}
 	}

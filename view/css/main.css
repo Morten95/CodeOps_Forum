@@ -174,7 +174,7 @@ p{
 }
 
 p#LogginText{
-  margin: 10px; 
+  margin: 10px;
 }
 
 .userBox {
@@ -268,6 +268,26 @@ button.btn.btn-danger.delCom {
     margin-right: 1%;
 }
 
+.postlist .TopicSearch {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.postlist .PostSearch {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.postlist .CommentSearch {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.Search.bar {
+    margin-left: 1%;
+    float: left;
+}
+
 @media screen and (max-width: 600px) {
   .topnav .login-container {
     float: none;
@@ -281,7 +301,6 @@ button.btn.btn-danger.delCom {
     padding: 14px;
   }
   .topnav input[type=text] {
-    border: 1px solid #ccc;  
+    border: 1px solid #ccc;
   }
 }
-
