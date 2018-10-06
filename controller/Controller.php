@@ -162,20 +162,33 @@ class Controller {
 		   	}
 		}
 
-		else if(isset($_POST['submitText'])) {
-			$user = $this->model->getUserByName($_SESSION['username']);
-
-
-			$post = new Post(0, filter_var(sanitize($_POST['postarea']), FILTER_SANITIZE_STRING), $user->id, $_POST['topicId']);
-			$this->model->createPost($post);
-			$_GET['id'] = $_POST['topicId'];
-			header('Location: '. $_POST['redirect']);
-
-		}
+		/////////////POST TOPIC
 
 		else if (isset($_GET['insert'])) {
 		    $view->create("view/InsertView.php", [$categories]); 
 		}
+
+		else if(isset($_POST['submitText'])) {
+
+			$user = $this->model->getUserByName($_SESSION['username']);
+
+			if (empty($_POST['title'])) {
+				echo "Text area must be filled";
+			}
+
+			else if (empty($_POST['body'])) {
+				echo "Text area must be filled";
+			}
+
+			else {
+				$post = new Post(0, filter_var(sanitize($_POST['postarea']), FILTER_SANITIZE_STRING), $user->id, $_POST['topicId']);
+				$this->model->createPost($post);
+				$_GET['id'] = $_POST['topicId'];
+				header('Location: '. $_POST['redirect']);
+			}
+
+		}
+
 			// COMMENT
 		else if (isset($_POST['sub_comment'])){
 			$user = $this->model->getUserByName($_SESSION['username']); 
