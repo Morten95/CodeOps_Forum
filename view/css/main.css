@@ -264,6 +264,10 @@ p#topicBody {
     margin-bottom: 25px;
 }
 
+button.btn.btn-danger.delCom {
+    margin-right: 1%;
+}
+
 @media screen and (max-width: 600px) {
   .topnav .login-container {
     float: none;

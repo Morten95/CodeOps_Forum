@@ -51,6 +51,21 @@
 		    			<?php foreach ($data[5] as $com) { ?>
 		    				<?php if ($v1->id == $com->postID) {  ?>
 		    					<hr id="commentLine" >
+
+		    					<!-- Admin DELETE comment --->
+
+		    					<?php if($data[7]->admin){ ?>
+									<form method="post"  action="index.php">
+
+						    			<input type="hidden" name="topicId" value=<?php echo $_GET['id']?>/>
+						    			<input type="hidden" name="commentId" value=<?php echo $com->id; ?>/>
+		    							<input type="hidden" name="redirect" value=<?php echo $_SERVER['REQUEST_URI'];?>/>
+			   							<button type="submit" class="btn btn-danger delCom" name="deleteComment" data-id=""><i class="fa fa-trash"></i></button>
+
+									</form>
+		    									
+		    					<?php }?>
+
 		    					<?php foreach ($data[6] as $user) {  // Inne i user--> 
 		    						if ($com->userID == $user->id) { ?>
 										<span> 
@@ -60,7 +75,11 @@
 		    						<?php }?>
 		    					<?php } ?>
 		    								<?php echo $com->body . "<br>"; ?>
+		    									
+
 		    								</small>
+
+		    							
 		    							</span> 
 
 		    			<?php } ?>
