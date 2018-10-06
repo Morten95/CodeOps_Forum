@@ -1,7 +1,3 @@
-
-<?php
-	$count = 0;
-?>
 <div class="container">
   
 
@@ -15,8 +11,8 @@
 	</div>
 
 	<div>					<!---//v3 v4--->
-		<?php array_map(function($v1, $v2, $postIndex) use ($data, $count) {  ?>  
-
+		
+		<?php array_map(function($v1, $v2, $postIndex) use ($data) {  ?>  
 		<div id="post" class="postlist">
 			<div class="userBox">
 					<p><?php echo "User: " . $v2->username; echo "<br>";?> </p>
@@ -51,16 +47,15 @@
 		    					<?php } ?>
 		    					<span> 
 		    						<small> <!-- Inne i POST-->
-		    							<?php echo $user->username . ":" . $com->body; ?>
+		    							<?php echo $user->username . " : " . $com->body; ?>
 		    						</small>
 		    					</span> 
 		    			<?php } ?>
 	    			<?php } ?>
 	    			</div>
     			<?php } ?>
-			
-			<?php if ($data[4]) {  ?>
 
+			<?php if ($data[4]) {  ?>
 			<form class="comment_reply" data-id="<?php echo $postIndex; ?>" method="post" action="index.php">
     			<textarea class="form-control" rows="2" name="post_rep" ></textarea>
     			<input type="hidden" class="hidden" name="test" class="post_id" value=<?php echo $v1->id?>/>
@@ -69,12 +64,12 @@
     		</form>
     		<div id="comment" class="comment_reply">
 
-
     		<?php } ?>
 
     		</div>
 		</div>
 		<?php }, $data[2], $data[3], array_keys($data[2])) ?>
+
 
 					
 		<div id="post" class="postlist">
