@@ -77,7 +77,11 @@ class Controller {
 			// Fetch user of comments of POSTS
 			$userComments = $this->model->getUserByComment($comments);
 			
-			$loggedUser = $this->model->getUserByName($_SESSION["username"]);
+			if(isset($_SESSION["username"])){
+				$loggedUser = $this->model->getUserByName($_SESSION["username"]);
+			} else {
+				$loggedUser = null;	 
+			}
 
 			$view->create("view/TopicPageView.php", [$topic, $topicUser, $post, $postUser, isset($_SESSION["username"]), $comments, $userComments, $loggedUser]);
 		}
@@ -193,7 +197,7 @@ class Controller {
 
 		else if (isset($_GET['category'])) {
 			$topics = $this->model->getAllTopicsById($_GET['category']);
-			$view->create("view/TopicView.php", [$topics]);
+			$view->create("view/TopicView.php", [$topics, isset($_SESSION["username"])]);
 		}
 
 		else if (isset($_POST['topicIdd'])) {
