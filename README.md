@@ -92,5 +92,6 @@ Yobe  N
 
 
 Acknowledgements
-Hats off for RUNE hjelsvold. We managed to use some of his code from the course Database...
-Google/Stackoveflow for saving us from time to time(or basically all day all night).
+--------
+Hats off for RUNE hjelsvold. We managed to use some of his code from the course Database...  
+Google/Stackoveflow for saving us from time to time(or basically all day all night).  
