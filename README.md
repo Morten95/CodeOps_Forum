@@ -53,8 +53,9 @@ Installation guide Windows
 --------
 Prerequisites: 32-bit or 64-bit machine and IQ over 130 like Anders.
 Higher or lower IQ then 130 will complicated the task, so be aware of this before starting
-
+----
 Download  from the original page https://www.apachefriends.org/index.html
+----
 1. Choose Download  for Windows.
 2. Double click the file to run the installer.
 3. Click the OK button on the warning to continue
