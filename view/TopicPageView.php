@@ -1,6 +1,6 @@
 
 <?php
-
+	$count = 0;
 ?>
 <div class="container">
   
@@ -15,7 +15,7 @@
 	</div>
 
 	<div>					<!---//v3 v4--->
-		<?php array_map(function($v1, $v2) use ($data) {  ?>  
+		<?php array_map(function($v1, $v2, $postIndex) use ($data, $count) {  ?>  
 
 		<div id="post" class="postlist">
 			<div class="userBox">
@@ -26,15 +26,15 @@
 						
 					</form>
 					<div>
-						<button type="button" class="btn btn-primary rep" data-id=""><i class="fa fa-reply"></i></button>
+						<button type="button" class="btn btn-primary rep" data-id="<?php echo $postIndex; ?>"><i class="fa fa-reply"></i></button>
    						<!--<button type="button" class="btn btn-primary rep" data-id="">Reply</button> -->
 					</div>
+
+
 					
 			</div>
 			<p><?php echo $v1->body; ?> </p>
-			
-    		
-
+   			
     			<?php if($data[5]) { ?>
 		    		<div class="comment_body" style="display: block";>    <!--- FOR EACH POST I PRINT THE COMMENT & USERNAME ! -->
 		    			<?php foreach ($data[5] as $com) { ?>
@@ -51,9 +51,9 @@
 		    					<?php } ?>
 		    					<span> 
 		    						<small> <!-- Inne i POST-->
-		    					<?php echo $user->username . ": " . $com->body . "<br>"; ?>
-		    								</small>
-		    				</span> 
+		    							<?php echo $user->username . ":" . $com->body; ?>
+		    						</small>
+		    					</span> 
 		    			<?php } ?>
 	    			<?php } ?>
 	    			</div>
@@ -61,20 +61,20 @@
 			
 			<?php if ($data[4]) {  ?>
 
-			<form class="comment_reply" data-id="" method="post" action="index.php">
+			<form class="comment_reply" data-id="<?php echo $postIndex; ?>" method="post" action="index.php">
     			<textarea class="form-control" rows="2" name="post_rep" ></textarea>
     			<input type="hidden" class="hidden" name="test" class="post_id" value=<?php echo $v1->id?>/>
     			<button type="submit" name="sub_comment" class="btn btn-primary" class="post_rep_sub">Submit</button>
     			<input type="hidden" name="redirect123" value=<?php echo $_SERVER['REQUEST_URI'];?>/>
     		</form>
-
     		<div id="comment" class="comment_reply">
+
 
     		<?php } ?>
 
     		</div>
 		</div>
-		<?php }, $data[2], $data[3]) ?>
+		<?php }, $data[2], $data[3], array_keys($data[2])) ?>
 
 					
 		<div id="post" class="postlist">
@@ -104,18 +104,22 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <script type="text/javascript">
-    $('form.comment_reply').hide();
-	$(document).ready(function(){
-  	$(document).on('click' , 'button.rep' , function(){
-     var closestDiv = $(this).closest('div'); // also you can use $(this).parent()
-     if($('form.comment_reply').is(":hidden")){
-     	$('form.comment_reply').show();
-     } else {
-    	$('form.comment_reply').hide();
-     }
-     //closestDiv.fadeOut();
-     //closestDiv.next('form.comment_reply').slideToggle(100);
-  });
-});
+
+for (var i = 0; i <= <?php echo count($data[2]); ?> - 1; i++) {
+		
+    	$("form.comment_reply").hide();
+	
+		$(document).ready(function(){
+	  		$(document).on("click" , "button.rep" , function(){
+	  			if($(this).data("id") == $(this).parents().children().closest("form.comment_reply").data("id") && $(this).parents().children().closest("form.comment_reply").is(":hidden")){
+		     		$(this).parents().children().closest("form.comment_reply").show();	
+	  			} else {
+		     		$(this).parents().children().closest("form.comment_reply").hide();	
+
+	  			}
+  		});
+	});
+}
+
 </script>
 
