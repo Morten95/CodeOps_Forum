@@ -81,7 +81,7 @@ Download  XAMPP from the original page https://www.apachefriends.org/index.html
 
 Authors
 ------
-Zoihab B  
+Zohaib B  
 Anders B  
 Jostein VH  
 Daniel S  
