@@ -206,21 +206,29 @@ class DBModel {
     }
 
      public function createPost($post) {
-
-        $request = $this->db->prepare("INSERT INTO Post(body, userId, topicId) VALUES(:body, :userId, :topicId)");
-        $request->bindValue(':body', $post->body, PDO::PARAM_STR);
-        $request->bindValue(':userId', $post->userId, PDO::PARAM_INT);
-        $request->bindValue(':topicId', $post->topicId, PDO::PARAM_INT);
-        $request->execute();  
+        try {
+            $request = $this->db->prepare("INSERT INTO Post(body, userId, topicId) VALUES(:body, :userId, :topicId)");
+            $request->bindValue(':body', $post->body, PDO::PARAM_STR);
+            $request->bindValue(':userId', $post->userId, PDO::PARAM_INT);
+            $request->bindValue(':topicId', $post->topicId, PDO::PARAM_INT);
+            $request->execute();  
+        }
+        catch(PDOException $e){
+            $e->getMessage(); 
+        }
     }
 
     public function createComment($comment) {
-
-        $request = $this->db->prepare("INSERT INTO Comment(postID, userID, body) VALUES(:postId, :userId, :body)");
-        $request->bindValue(':postId', $comment->postID, PDO::PARAM_INT);
-        $request->bindValue(':userId', $comment->userID, PDO::PARAM_INT);
-        $request->bindValue(':body', $comment->body, PDO::PARAM_STR);
-        $request->execute();  
+        try {
+            $request = $this->db->prepare("INSERT INTO Comment(postID, userID, body) VALUES(:postId, :userId, :body)");
+            $request->bindValue(':postId', $comment->postID, PDO::PARAM_INT);
+            $request->bindValue(':userId', $comment->userID, PDO::PARAM_INT);
+            $request->bindValue(':body', $comment->body, PDO::PARAM_STR);
+            $request->execute();  
+        }
+        catch(PDOException $e){
+            $e->getMessage(); 
+        }
    }
 
     public function getUserByName($userName){
