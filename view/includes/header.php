@@ -4,6 +4,12 @@
     <link rel="stylesheet" href="view/css/bootstrap.min.css">
     <!-- Add icon library -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta http-equiv="Content-Security-Policy"
+        script-src 'none'; 
+        media-src 'none';
+        img-src *;
+        content 'default-src' 'self';
+    >
   </head>
   <body>
     <div class="topnav">
