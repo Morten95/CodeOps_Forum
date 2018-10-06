@@ -174,6 +174,17 @@ class Controller {
 
 		 }
 
+		 else if (isset($_GET['category'])) {
+		      $topics = $this->model->getAllTopicsById($_GET['category']);
+		      $view->create("view/TopicView.php", [$topics]);
+
+		 }
+
+		 else if (isset($_POST['topicIdd'])) {
+		      $this->model->deleteTopicById($_POST['topicIdd']);
+		      $view->create("view/HomePageView.php", [$categories, $latestTopics]);
+		 }
+
 		else { 
 			$view->create("view/HomePageView.php", [$categories, $latestTopics]);
 		}
