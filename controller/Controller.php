@@ -182,49 +182,31 @@ class Controller {
 			$_GET['id'] = $_POST['topicId'];
 			header('Location: '. $_POST['redirect']);
 		}
-	}
-
-<<<<<<< HEAD
-		else if (isset($_GET['insert'])) {
-		    $view->create("view/InsertView.php", [$categories]);
-		}
-			// COMMENT
-		else if (isset($_POST['sub_comment'])){
-			$user = $this->model->getUserByName($_SESSION['username']);
-
-			$comment = new Comment(0, $_POST['test'], $user->id, filter_var(sanitize($_POST['post_rep']), FILTER_SANITIZE_STRING));
-=======
-			// COMMENT
+	}			// COMMENT
 		else if (isset($_POST['sub_comment'])){
 			$user = $this->model->getUserByName($_SESSION['username']);
 
 			if (empty($_POST['post_rep'])) {
 				echo "Can not post empty comment";
-			}
-
-			else { $comment = new Comment(0, $_POST['test'], $user->id, filter_var(sanitize($_POST['post_rep']), FILTER_SANITIZE_STRING));
->>>>>>> a8a75a77c03ce5a23129e6589684c89a174b20d0
+			} else {
+			$comment = new Comment(0, $_POST['test'], $user->id, filter_var(sanitize($_POST['post_rep']), FILTER_SANITIZE_STRING));
 			$this->model->createComment($comment);
 			$_GET['id'] = $_POST['topicId'];
 			header('Location: ' . $_POST['redirect123']);
 		}
 	}
-
 		else if (isset($_POST['categoryId'])) {
-		     $userId = $this->model->getUserIdByUsername($_SESSION['username']);
+			$userId = $this->model->getUserIdByUsername($_SESSION['username']);
 
 			if (empty($_POST['title'])) {
 				echo "Topic must contain title";
-			}
-
-			else if (empty($_POST['body'])) {
+			}	else if (empty($_POST['body'])) {
 				echo "Can not post empty topic";
+			}	else {
+				$topic = new Topic(0, filter_var(sanitize($_POST['title']), FILTER_SANITIZE_STRING), filter_var (sanitize($_POST['body']), FILTER_SANITIZE_STRING), $userId, (int)$_POST['categoryId']);
+				$this->model->createTopic($topic);
+				$view->create("view/HomePageView.php", [$categories, $latestTopics]);
 			}
-
-			else { $topic = new Topic(0, filter_var(sanitize($_POST['title']), FILTER_SANITIZE_STRING), filter_var (sanitize($_POST['body']), FILTER_SANITIZE_STRING), $userId, (int)$_POST['categoryId']);
-		     $this->model->createTopic($topic);
-		     $view->create("view/HomePageView.php", [$categories, $latestTopics]);
-
 		 }else if (isset($_GET['search'])) {
 			 $searchKeyword = $_POST["Search"];
 			 $topic = $this->model->getTopicSearchResults($searchKeyword);
