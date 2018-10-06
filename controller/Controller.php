@@ -100,10 +100,9 @@ class Controller {
 		}
 			// COMMENT
 		else if (isset($_POST['sub_comment'])){
-			$user = $this->model->getUserByName($_SESSION['username']);
-
+			$user = $this->model->getUserByName($_SESSION['username']); 
+		
 			$comment = new Comment(0, $_POST['test'], $user->id, $_POST['post_rep']);
-			var_dump($comment);
 			$this->model->createComment($comment);
 			$_GET['id'] = $_POST['topicId'];
 			header('Location: ' . $_POST['redirect123']);

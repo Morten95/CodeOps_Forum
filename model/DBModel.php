@@ -184,7 +184,6 @@ class DBModel {
         $users = array();
         foreach ($comments as $comment) {
             $stmt = $this->db->prepare("SELECT * FROM User WHERE id = :id");
-            var_dump($comment);
             $stmt->bindValue(':id', $comment->userID, PDO::PARAM_INT);
             $stmt->execute();
         

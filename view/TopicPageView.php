@@ -39,21 +39,18 @@
 		    		<div class="comment_body" style="display: block";>    <!--- FOR EACH POST I PRINT THE COMMENT & USERNAME ! -->
 		    			<?php foreach ($data[5] as $com) { ?>
 		    				<?php if ($v1->id == $com->postID) {  ?>
-		    					<hr id="ZohaibStyle" >
+		    					<hr id="commentLine" >
 		    					<?php foreach ($data[6] as $user) {  // Inne i user--> 
 		    						if ($com->userID == $user->id) { ?>
-		    					
-		    					
-		    							<!--- *** I HAVE NO IDEA WHY THIS WORK?! *** --->
-		    						
+										<span> 
+		    								<small>
+		    									<?php echo $user->username . ": "; break; ?>	
 		    				
 		    						<?php }?>
 		    					<?php } ?>
-		    					<span> 
-		    						<small> <!-- Inne i POST-->
-		    					<?php echo $user->username . ": " . $com->body . "<br>"; ?>
+		    								<?php echo $com->body . "<br>"; ?>
 		    								</small>
-		    				</span> 
+		    							</span> 
 		    			<?php } ?>
 	    			<?php } ?>
 	    			</div>
