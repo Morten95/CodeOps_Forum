@@ -233,5 +233,23 @@ class DBModel {
         else 
             return null;
     }
+
+    public function deletePostById($id){
+        $this->deleteCommentByPostId($id);
+        $request = $this->db->prepare("DELETE FROM Post WHERE id = :id");
+        $request->bindValue(":id", $id, PDO::PARAM_INT);
+        $response = $request->execute();
+        if($response){
+            return true;
+        } 
+
+        return false;
+    }
+
+    public function deleteCommentByPostId($postId){
+        $request = $this->db->prepare("DELETE FROM Comment WHERE postId = :id");
+        $request->bindValue(":id", $postId, PDO::PARAM_INT);
+        $response = $request->execute();
+    }
 }
 ?>

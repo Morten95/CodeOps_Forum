@@ -76,8 +76,10 @@ class Controller {
 			
 			// Fetch user of comments of POSTS
 			$userComments = $this->model->getUserByComment($comments);
-		
-			$view->create("view/TopicPageView.php", [$topic, $topicUser, $post, $postUser, isset($_SESSION["username"]), $comments, $userComments]);
+			
+			$loggedUser = $this->model->getUserByName($_SESSION["username"]);
+
+			$view->create("view/TopicPageView.php", [$topic, $topicUser, $post, $postUser, isset($_SESSION["username"]), $comments, $userComments, $loggedUser]);
 		}
 
 		// REGISTER USER:
@@ -178,6 +180,13 @@ class Controller {
 		     $view->create("view/HomePageView.php", [$categories, $latestTopics]);
 
 		 }
+
+		else if (isset($_POST['deletePost'])){
+			
+			$this->model->deletePostById(str_replace("/","",$_POST["postId"]));
+			
+			header('Location: ' . $_POST['redirect']);
+		}
 
 		else { 
 			$view->create("view/HomePageView.php", [$categories, $latestTopics]);
