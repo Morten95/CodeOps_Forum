@@ -17,7 +17,7 @@ Installation Guide UNIX/LINUX
 Prerequisites: 32-bit or 64-bit machine and IQ over 130 like Anders.
 Higher or lower IQ then 130 will complicated the task, so be aware of this before starting
 
-Download  XAMPPfrom the original page :  https://www.apachefriends.org/index.html
+Download  XAMPP from the page :  https://www.apachefriends.org/index.html
 1. Choose Download  for LINUX, if you have linux distro.
 2. When you click download it will prompt the  file to download and it will
 save it on the choosen folder(usually the download folder).
@@ -52,8 +52,8 @@ Installation guide Windows
 Prerequisites: 32-bit or 64-bit machine and IQ over 130 like Anders.
 Higher or lower IQ then 130 will complicated the task, so be aware of this before starting
 
-Download  XAMPP from the original page https://www.apachefriends.org/index.html
-----
+###Download  XAMPP from the https://www.apachefriends.org/index.html
+---
 1. Choose Download  for Windows.
 2. Double click the file to run the installer.
 3. Click the OK button on the warning to continue
@@ -92,5 +92,4 @@ Yobe  N
 
 Acknowledgements
 --------
-Hats off for Rune Hjelsvold. We managed to use some of his code from the course Database...  
 Google/Stackoveflow for saving us from time to time(or basically all day all night).  
