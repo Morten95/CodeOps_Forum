@@ -89,10 +89,11 @@ class Controller {
 
 			$userErr = "";
 			$reguser = sanitize($_POST['user']);
-			$regpw = sanitize(password_hash($_POST['password_1'], PASSWORD_DEFAULT));
+			$regpw = sanitize($_POST['password_1']);
 			$regmail = sanitize($_POST['email']);
 			$regfname = sanitize($_POST['fname']);
 			$reglname = sanitize($_POST['lname']);
+			$str = (strlen($regpw));
 
 			if (empty($_POST['fname'])) {
 				echo $userErr = "First name is required";
@@ -130,8 +131,12 @@ class Controller {
 				echo $userErr = "Password is required";
 			}
 
-			else if(!preg_match("/^[a-zA-Z0-9#%&!$?+.,_-]*$/",$regpw)) {
+			else if(!preg_match("/^[a-zA-Z0-9#%&!$?+.,_\/-]*$/",$regpw)) {
 					echo $userErr = "ERROR! Password cannot contain some of these characters!";
+			}
+
+			else if ($str < 6) {
+				echo $userErr = "ERROR! Password is too short";
 			}
 
 			else {
