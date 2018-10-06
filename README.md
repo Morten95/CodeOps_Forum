@@ -12,13 +12,14 @@ The group choose the mvc model,(Model, view, controller) and a simple local DB. 
 
 
 
-Installation Guide UNIX/LINUX
+Installation Guide UNIX/LINUX  
+---------
 Prerequisites: 32-bit or 64-bit machine and IQ over 130 like Anders.
 Higher or lower IQ then 130 will complicated the task, so be aware of this before starting
 
-Download Xammp from the original page :  https://www.apachefriends.org/index.html
-1. Choose Download Xammp for LINUX, if you have linux distro.
-2. When you click download it will prompt the Xammp file to download and it will
+Download  from the original page :  https://www.apachefriends.org/index.html
+1. Choose Download  for LINUX, if you have linux distro.
+2. When you click download it will prompt the  file to download and it will
 save it on the choosen folder(usually the download folder).
 3. Change over to the directory where Xampp file was downloaded. (Example cd Downloads)
 4. Make the file to be executable by running this command:
@@ -46,13 +47,16 @@ save it on the choosen folder(usually the download folder).
 17. Now click import and then browse
 18. Including Database by going to this path:  /opt/lampp/htdocs/database-files and upload the only file up.   
 and click go.
+19. Now go back
 
 Installation guide Windows       
+--------
 Prerequisites: 32-bit or 64-bit machine and IQ over 130 like Anders.
 Higher or lower IQ then 130 will complicated the task, so be aware of this before starting
 
-Download Xammp from the original page https://www.apachefriends.org/index.html
-1. Choose Download Xammp for Windows.
+Download  from the original page https://www.apachefriends.org/index.html
+----
+1. Choose Download  for Windows.
 2. Double click the file to run the installer.
 3. Click the OK button on the warning to continue
 4. Click "Next" on the next three windows and leave everything to default.
@@ -66,27 +70,29 @@ Download Xammp from the original page https://www.apachefriends.org/index.html
 11. Open XAMPP click on the XAMPP on your desktop and click "Start" on apache and mysql.
 12. Now you can open your web browser and type either localhost/somefolder or
       127.0.0.1/somefolder
-13. Go to where you want to clone: example C:/xampp
+13. Go to where you want to clone: example C:\xampp\htdocs
 14. You should now clone this repo: git clone https://github.com/zohaib194/CodeOps_Forum.git
 15. Now revisit your web browser and type in: localhost/CodeOps_Forum. Our forum should appear now without DB.
 16. Make sure to upload DB. Go to localhost/phpmyadmin. Click databases.
 17.  Now click import and then browse
-18. Go to where you saved the Xammp then htdocs/database-files and upload the only file with a .sql extension.
+18. Go to where you saved the  then htdocs/database-files and upload the only file with a .sql extension. path: C:\xampp\htdocs\CodeOps_Forum\datafiles
 19.
 
 
 
 
 Authors
-Zoihab B
-Anders B
-Jostein VH
-Daniel S
-Abdi  M
-Yobe  N
+------
+Zoihab B  
+Anders B  
+Jostein VH  
+Daniel S  
+Abdi  M  
+Yobe  N  
 
 
 
 Acknowledgements
-Hats off for RUNE hjelsvold. We managed to use some of his code from the course Database...
-Google/Stackoveflow for saving us from time to time(or basically all day all night).
+--------
+Hats off for RUNE hjelsvold. We managed to use some of his code from the course Database...  
+Google/Stackoveflow for saving us from time to time(or basically all day all night).  

@@ -156,7 +156,7 @@ class Controller {
 			$user = $this->model->getUserByName($_SESSION['username']);
 
 
-			$post = new Post(0, filter_var(sanitize($_POST['postarea']), FILTER_SANITIZE_EMAIL), $user->id, $_POST['topicId']);
+			$post = new Post(0, filter_var(sanitize($_POST['postarea']), FILTER_SANITIZE_STRING), $user->id, $_POST['topicId']);
 			$this->model->createPost($post);
 			$_GET['id'] = $_POST['topicId'];
 			header('Location: '. $_POST['redirect']);
@@ -170,7 +170,7 @@ class Controller {
 		else if (isset($_POST['sub_comment'])){
 			$user = $this->model->getUserByName($_SESSION['username']); 
 		
-			$comment = new Comment(0, $_POST['test'], $user->id, filter_var(sanitize($_POST['post_rep']), FILTER_SANITIZE_EMAIL));
+			$comment = new Comment(0, $_POST['test'], $user->id, filter_var(sanitize($_POST['post_rep']), FILTER_SANITIZE_STRING));
 			$this->model->createComment($comment);
 			$_GET['id'] = $_POST['topicId'];
 			header('Location: ' . $_POST['redirect123']);
@@ -179,7 +179,7 @@ class Controller {
 
 		else if (isset($_POST['categoryId'])) {
 		     $userId = $this->model->getUserIdByUsername($_SESSION['username']);
-		     $topic = new Topic(0, sanitize($_POST['title']), sanitize($_POST['body']), $userId, (int)$_POST['categoryId']);
+		     $topic = new Topic(0, filter_var(sanitize($_POST['title']), FILTER_SANITIZE_STRING), filter_var (sanitize($_POST['body']), FILTER_SANITIZE_STRING), $userId, (int)$_POST['categoryId']);
 		     $this->model->createTopic($topic);
 		     $view->create("view/HomePageView.php", [$categories, $latestTopics]);
 
