@@ -182,10 +182,19 @@ class Controller {
 		 }
 
 		else if (isset($_POST['deletePost'])){
-			
 			$this->model->deletePostById(str_replace("/","",$_POST["postId"]));
-			
 			header('Location: ' . $_POST['redirect']);
+		}
+
+		else if (isset($_GET['category'])) {
+			$topics = $this->model->getAllTopicsById($_GET['category']);
+			$view->create("view/TopicView.php", [$topics]);
+		}
+
+		else if (isset($_POST['topicIdd'])) {
+			$this->model->deleteTopicById($_POST['topicIdd']);
+			$view->create("view/HomePageView.php", [$categories, $latestTopics]);
+		   	header("Refresh:0");
 		}
 
 		else { 
