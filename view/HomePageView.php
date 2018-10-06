@@ -19,7 +19,7 @@ This is the body of the page
 	<?php foreach($data[1] as $topic): ?>
 		<hr>
 		    <h2><a href="/CodeOps_Forum/index.php?id=<?php echo $topic->id ?>"><?php echo $topic->title?></a></h2>
-		    <p  id="topicBody"><?php echo $topic->body ?></p>
+		    <p id="topicBody"><?php echo $topic->body ?></p>
 		<hr>
 	<?php endforeach; ?>
 
