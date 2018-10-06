@@ -37,26 +37,19 @@ class DBModel {
     public function authenticate($user) {
         $data= [];
 
-        try {
             $request = $this->db->prepare("SELECT * FROM User WHERE username = :username");
             $request->bindValue(':username', $user->username, PDO::PARAM_STR);
             $request->execute();
             $results = $request->fetch(PDO::FETCH_ASSOC);
             $user->setUserData($results["id"], $results["email"],$results["name"],$results["surname"],$results["active"],$results["admin"]);
-            //var_dump($results['password']);
             if(password_verify($user->password, $results['password'])) {
                 $data['status'] = "OK";
             } else {
-                $data['status'] = "FAIL";
-                $data['plain_pass'] = $user->password;
-                $data['hash_pass_db'] = $results['password'];
+                $data['status'] = "Error";
+                $data ['errormessage'] = 'Something went wrong';
+                //$data['plain_pass'] = $user->password;
+                //$data['hash_pass_db'] = $results['password'];
             }
-        } catch(Exception $error){
-            // Dont use in production, just for testing.
-            $data['status'] = "FAIL";
-            $data['errorMessage'] = 'Something failed with the query';
-            $data['errorInfo'] = $request->errorInfo();
-        }
 	    return $data;
     }
 
