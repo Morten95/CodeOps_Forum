@@ -22,7 +22,23 @@
 						
 					</form>
 					<div>
-						<button type="button" class="btn btn-primary rep" data-id="<?php echo $postIndex; ?>"><i class="fa fa-reply"></i></button>
+						<?php if($data[7]->admin) { ?>
+							<form method="post"  action="index.php">
+
+				    			<input type="hidden" name="topicId" value=<?php echo $_GET['id']?>/>
+				    			<input type="hidden" name="postId" value=<?php echo $v1->id; ?>/>
+    							<input type="hidden" name="redirect" value=<?php echo $_SERVER['REQUEST_URI'];?>/>
+	   							<button type="submit" class="btn btn-danger del" name="deletePost" data-id=""><i class="fa fa-trash"></i></button>
+
+							</form>
+
+							<button type="button" class="btn btn-primary rep" data-id="<?php echo $postIndex; ?>"><i class="fa fa-reply"></i>
+								 
+							</button>
+   						<?php } else {?>
+   							<button style="margin-left:43%" type="button" class="btn btn-primary rep" data-id="<?php echo $postIndex; ?>"><i class="fa fa-reply"></i> 
+   							</button>
+						<?php } ?>
    						<!--<button type="button" class="btn btn-primary rep" data-id="">Reply</button> -->
 					</div>
 
@@ -30,7 +46,6 @@
 					
 			</div>
 			<p><?php echo $v1->body; ?> </p>
-   			
     			<?php if($data[5]) { ?>
 		    		<div class="comment_body" style="display: block";>    <!--- FOR EACH POST I PRINT THE COMMENT & USERNAME ! -->
 		    			<?php foreach ($data[5] as $com) { ?>
@@ -108,7 +123,6 @@ for (var i = 0; i <= <?php echo count($data[2]); ?> - 1; i++) {
 		     		$(this).parents().children().closest("form.comment_reply").show();	
 	  			} else {
 		     		$(this).parents().children().closest("form.comment_reply").hide();	
-
 	  			}
   		});
 	});

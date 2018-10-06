@@ -15,7 +15,7 @@
 	</div>
 	<div class="input-group">
 		<label>Email</label>
-		<input type="email" name="email" placeholder="example@mail.com"> <!-- virker ikke hundre prosent ^[A-Za-z0-9._-]+@[A-Za-z0-9.-]+.[A-Za-z]$ -->
+		<input type="email" name="email" placeholder="example@mail.com">
 	</div>
 	<div class="input-group">
 		<label>Password</label>

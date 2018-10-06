@@ -3,7 +3,7 @@
   <ul class="nav justify-content-center">
     <?php foreach($data[0] as $category): ?>
     <li class="nav-item">
-      <a class="nav-link" href="#"><?php echo $category->name; ?></a>
+      <a class="nav-link" href="/CodeOps_Forum/index.php?category=<?php echo $category->id ;?>"> <?php echo $category->name; ?></a>
     </li>
     <?php endforeach; ?>
   </ul>
