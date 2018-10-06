@@ -286,5 +286,13 @@ class DBModel {
         $request->bindValue(':id', $id, PDO::PARAM_STR);
         $request->execute();
     }
+
+    public function deleteCommentById($id){
+        $request = $this->db->prepare("DELETE FROM Comment WHERE id = :id");
+        $request->bindValue(":id", $id, PDO::PARAM_INT);
+        $response = $request->execute();
+    }
+
+
 }
 ?>

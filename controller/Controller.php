@@ -184,7 +184,12 @@ class Controller {
 		else if (isset($_POST['deletePost'])){
 			$this->model->deletePostById(str_replace("/","",$_POST["postId"]));
 			header('Location: ' . $_POST['redirect']);
-		}
+		} 
+
+		else if (isset($_POST['deleteComment'])){
+			$this->model->deleteCommentById(str_replace("/","",$_POST["commentId"]));
+			header('Location: ' . $_POST['redirect']);
+		} 
 
 		else if (isset($_GET['category'])) {
 			$topics = $this->model->getAllTopicsById($_GET['category']);
