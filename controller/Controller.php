@@ -163,17 +163,28 @@ class Controller {
 		   	}
 		}
 
+		/////////////POST TOPIC
+
+		else if (isset($_GET['insert'])) {
+		    $view->create("view/InsertView.php", [$categories]);
+		}
+
 		else if(isset($_POST['submitText'])) {
+
 			$user = $this->model->getUserByName($_SESSION['username']);
 
+				if (empty($_POST['postarea'])) {
+					echo "Can not post empty comment";
+				}
 
-			$post = new Post(0, filter_var(sanitize($_POST['postarea']), FILTER_SANITIZE_STRING), $user->id, $_POST['topicId']);
+				else { $post = new Post(0, filter_var(sanitize($_POST['postarea']), FILTER_SANITIZE_STRING), $user->id, $_POST['topicId']);
 			$this->model->createPost($post);
 			$_GET['id'] = $_POST['topicId'];
 			header('Location: '. $_POST['redirect']);
-
 		}
+	}
 
+<<<<<<< HEAD
 		else if (isset($_GET['insert'])) {
 		    $view->create("view/InsertView.php", [$categories]);
 		}
@@ -182,15 +193,35 @@ class Controller {
 			$user = $this->model->getUserByName($_SESSION['username']);
 
 			$comment = new Comment(0, $_POST['test'], $user->id, filter_var(sanitize($_POST['post_rep']), FILTER_SANITIZE_STRING));
+=======
+			// COMMENT
+		else if (isset($_POST['sub_comment'])){
+			$user = $this->model->getUserByName($_SESSION['username']);
+
+			if (empty($_POST['post_rep'])) {
+				echo "Can not post empty comment";
+			}
+
+			else { $comment = new Comment(0, $_POST['test'], $user->id, filter_var(sanitize($_POST['post_rep']), FILTER_SANITIZE_STRING));
+>>>>>>> a8a75a77c03ce5a23129e6589684c89a174b20d0
 			$this->model->createComment($comment);
 			$_GET['id'] = $_POST['topicId'];
 			header('Location: ' . $_POST['redirect123']);
-
 		}
+	}
 
 		else if (isset($_POST['categoryId'])) {
 		     $userId = $this->model->getUserIdByUsername($_SESSION['username']);
-		     $topic = new Topic(0, filter_var(sanitize($_POST['title']), FILTER_SANITIZE_STRING), filter_var (sanitize($_POST['body']), FILTER_SANITIZE_STRING), $userId, (int)$_POST['categoryId']);
+
+			if (empty($_POST['title'])) {
+				echo "Topic must contain title";
+			}
+
+			else if (empty($_POST['body'])) {
+				echo "Can not post empty topic";
+			}
+
+			else { $topic = new Topic(0, filter_var(sanitize($_POST['title']), FILTER_SANITIZE_STRING), filter_var (sanitize($_POST['body']), FILTER_SANITIZE_STRING), $userId, (int)$_POST['categoryId']);
 		     $this->model->createTopic($topic);
 		     $view->create("view/HomePageView.php", [$categories, $latestTopics]);
 
