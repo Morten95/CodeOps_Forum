@@ -12,8 +12,8 @@ The group choose the mvc model,(Model, view, controller) and a simple local DB. 
 
 
 
-##Installation Guide UNIX/LINUX  
-
+Installation Guide UNIX/LINUX  
+---------
 Prerequisites: 32-bit or 64-bit machine and IQ over 130 like Anders.
 Higher or lower IQ then 130 will complicated the task, so be aware of this before starting
 
@@ -50,6 +50,7 @@ and click go.
 19. Now go back
 
 Installation guide Windows       
+--------
 Prerequisites: 32-bit or 64-bit machine and IQ over 130 like Anders.
 Higher or lower IQ then 130 will complicated the task, so be aware of this before starting
 
@@ -79,13 +80,14 @@ Download  from the original page https://www.apachefriends.org/index.html
 
 
 
-#####Authors
-Zoihab B
-Anders B
-Jostein VH
-Daniel S
-Abdi  M
-Yobe  N
+Authors
+------
+Zoihab B  
+Anders B  
+Jostein VH  
+Daniel S  
+Abdi  M  
+Yobe  N  
 
 
 
