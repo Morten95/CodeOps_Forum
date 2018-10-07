@@ -157,7 +157,11 @@ class Controller {
 			 	$comment = $this->model->getCommentSearchResults($searchKeyword);
 	
 			 	$view->create("view/SearchResults.php", [$searchKeyword, $topic, $post, $comment]);
+		 	} else {
+			 header('Location: index.php');
+
 		 	}
+
 		 }
 		 else if (isset($_POST['deletePost'])){
 			 $this->model->deletePostById(str_replace("/","",$_POST["postId"]));
