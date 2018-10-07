@@ -7,16 +7,6 @@ include_once("model/Category.php");
 include_once("model/Topic.php");
 include_once("model/Post.php");
 include_once("model/Comment.php");
-//include_once("view/SearchResults.php");
-
-/** The Controller is responsible for handling user requests, for exchanging data with the Model,
- * and for passing user response data to the various Views.
- * @author Rune Hjelsvold
- * @see model/Model.php The Model class holding book data.
- * @see view/viewbook.php The View class displaying information about one book.
- * @see view/booklist.php The View class displaying information about all books.
- * @see http://php-html.net/tutorials/model-view-controller-in-php/ The tutorial code used as basis.
- */
 
 class Controller {
 	public $model;
@@ -26,8 +16,6 @@ class Controller {
 	       $this->model = new DBModel();
 	}
 
-/** The one function running the controller code.
- */
 	public function invoke() {
 		//loading front page
 		$categories = $this->model->getAllCategories();
