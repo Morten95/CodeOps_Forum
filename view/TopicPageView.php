@@ -145,7 +145,7 @@ function validateComment(){
 		document.getElementById("post_rep").setCustomValidity('');
 	}
 	else{
-		document.getElementById("post_rep").setCustomValidity("Can not post empty comment")
+		document.getElementById("post_rep").setCustomValidity("Can not post empty comment");
 	}
 }
 

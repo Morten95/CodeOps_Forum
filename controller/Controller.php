@@ -116,14 +116,10 @@ class Controller {
 		else if (isset($_POST['sub_comment'])){
 			$user = $this->model->getUserByName($_SESSION['username']);
 
-			if (empty($_POST['post_rep'])) {
-				echo "Can not post empty comment";
-			} else {
 				$comment = new Comment(0, $_POST['test'], $user->id, filter_var($_POST['post_rep'], FILTER_SANITIZE_STRING));
 				$this->model->createComment($comment);
 				$_GET['id'] = $_POST['topicId'];
 				header('Location: ' . $_POST['redirect123']);
-			}	
 		}
 		else if (isset($_POST['categoryId'])) {
 			$userId = $this->model->getUserIdByUsername($_SESSION['username']);
