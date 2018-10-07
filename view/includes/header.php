@@ -60,10 +60,10 @@ function validateField(){
     document.getElementById("user").setCustomValidity(''); 
   }
   else {
-    document.getElementById("user").setCustomValidity("sad not valid");
+    document.getElementById("user").setCustomValidity("Username not valid");
   }
 
-  if (pass1!=""&&pass1.matchpass1.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&"¤%/()=?`^*'¨+<>\\~]{8,}$/)) {
+  if (pass1!=""&&pass1.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&"¤%/()=?`^*'¨+<>\\~]{8,}$/)) {
     document.getElementById("password").setCustomValidity(''); 
   }
   else {
