@@ -78,7 +78,7 @@ class Controller {
 			 	header('Location: index.php');
 			}
 		}
-
+        // Registers new User and sanatizes sendt values
 		else if (isset($_POST['reg'])) {
 
 			$reguser = filter_var($_POST['userr'],FILTER_SANITIZE_STRING);
@@ -123,17 +123,16 @@ class Controller {
 		}
 		else if (isset($_POST['categoryId'])) {
 			$userId = $this->model->getUserIdByUsername($_SESSION['username']);
-			
+
 			if($_GET["csrf"] == $_SESSION["token"]){
 				$topic = new Topic(0, filter_var($_POST['title'], FILTER_SANITIZE_STRING), filter_var($_POST['body'], FILTER_SANITIZE_STRING), $userId, (int)$_POST['categoryId']);
 				$this->model->createTopic($topic);
 				header("Refresh:0");
-				$view->create("view/HomePageView.php", [$categories, $latestTopics]);	
+				$view->create("view/HomePageView.php", [$categories, $latestTopics]);
 			} else {
 				header('Location: index.php');
 			}
-			
-				
+        // Recives a Search string sanatizes it, send the string to search topic, post and comment. Then sends values to SearchResults and desplays them
 		 }else if (isset($_GET['search'])) {
 		 	if($_POST["Search"] != "" && $_GET["csrf"] == $_SESSION["token"]){
 				$searchKeywordDirty = $_POST["Search"];
@@ -146,22 +145,22 @@ class Controller {
 		 	} else {
 			 header('Location: index.php');
 		 	}
-
-		 }
+}
+        // Deletes Post
 		 else if (isset($_POST['deletePost'])){
 			 $this->model->deletePostById(str_replace("/CodeOps_Forum/index.php?id=","",$_POST["postId"]));
 			 $id = str_replace("/CodeOps_Forum/index.php?id=","",$_POST['redirect']);
 			 $id = str_replace("/", "", $id);
 			 header('Location: index.php?id=' . $id);
 		 }
-
+        // Deletes Comment
 		 else if (isset($_POST['deleteComment'])){
 			 $this->model->deleteCommentById(str_replace("/CodeOps_Forum/index.php?id=","",$_POST["commentId"]));
 			 $id = str_replace("/CodeOps_Forum/index.php?id=","",$_POST['redirect']);
 			 $id = str_replace("/", "", $id);
 			 header('Location: index.php?id=' . $id);
 		 }
-
+		 		// Desplays categories
 		 else if (isset($_GET['category'])) {
 
 		 	if(isset($_SESSION["username"]) &&  $_GET["csrf"] == $_SESSION["token"]){
@@ -171,9 +170,8 @@ class Controller {
 		 	} else {
 				header('Location: index.php');
 		 	}
-
-		 }
-
+}
+        // Deletes Topic and updates homepage
 		 else if (isset($_POST['topicIdd'])) {
 			 $this->model->deleteTopicById($_POST['topicIdd']);
 			 $view->create("view/HomePageView.php", [$categories, $latestTopics]);

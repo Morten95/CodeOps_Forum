@@ -25,6 +25,7 @@ class DBModel {
 		}}
     }
 
+      // Authenticates a user login, else error
     public function authenticate($user) {
         $data= [];
 
@@ -43,7 +44,7 @@ class DBModel {
             }
 	    return $data;
     }
-
+        // Returns arroay of Topics by ID
     public function getAllTopicsById($id) {
             $request = $this->db->prepare("SELECT * FROM Topic WHERE categoryId = :categoryId");
             $request->bindValue(':categoryId', $id, PDO::PARAM_STR);
@@ -56,7 +57,7 @@ class DBModel {
 	    return $topics;
     }
 
-
+        // Returns a int of username
     public function getUserIdByUsername($username) {
 	$request = $this->db->prepare("SELECT * FROM User WHERE username = :username");
 	$request->bindValue(':username', $username, PDO::PARAM_STR);
@@ -64,7 +65,7 @@ class DBModel {
 	$results = $request->fetch(PDO::FETCH_ASSOC);
 	return (int)$results["id"];
     }
-
+        // Creates a new Topic
     public function createTopic($topic) {
     try {
     	   $request = $this->db->prepare("INSERT INTO Topic(title, body, userID, categoryId) VALUES(:title, :body, :userID, :categoryId)");
@@ -78,7 +79,7 @@ class DBModel {
 	     $e->getMessage();
 	    }
     }
-
+        // Registers a new User
     public function registerUser($user) {
         try {
 
@@ -100,7 +101,7 @@ class DBModel {
             $e->getMessage();
         }
 }
-
+      // Returns last 10 Topics (to front page)
     public function getLastTenTopics(){
         $topic = array();
         $stmt = $this->db->query("SELECT * FROM Topic ORDER BY id DESC LIMIT 3");
@@ -112,7 +113,7 @@ class DBModel {
 
         return $topic;
     }
-
+        // Returns all topics
     public function getAllCategories() {
         $request = $this->db->prepare("SELECT * FROM Category");
         $request->execute();
@@ -124,9 +125,8 @@ class DBModel {
         }
         return $results;
     }
-
+        // Returns Topic values by ID
     public function getTopicById($id){
-       // var_dump($id);
         $request = $this->db->prepare("SELECT * FROM Topic WHERE id = :id");
         $request->bindValue(':id', $id, PDO::PARAM_STR);
         $request->execute();
@@ -135,7 +135,7 @@ class DBModel {
 
         return new Topic($topicDB["id"], $topicDB["title"], $topicDB["body"], $topicDB["userID"], $topicDB["categoryId"]);
     }
-
+        // Returns User values by ID
     public function getUserByTopic($id){
         $request = $this->db->prepare("SELECT * FROM User WHERE id = :userId");
         $request->bindValue(':userId', $id, PDO::PARAM_INT);
@@ -146,7 +146,7 @@ class DBModel {
 
         return $user;
     }
-
+        // Returns Post values by ID
     public function getPostByTopicId($id){
         $post = array();
         $stmt = $this->db->prepare("SELECT * FROM Post WHERE topicId = :id");
@@ -158,7 +158,7 @@ class DBModel {
 
         return $post;
     }
-
+        // Returns Comment values
     public function getCommentByPostId($postArray){
         $comment = array();
         foreach ($postArray as $post){
@@ -172,11 +172,9 @@ class DBModel {
                 $comment[] = new Comment($row['id'], $row['postID'], $row['userID'], $row['body']);
             }
         }
-
         return $comment;
     }
-
-
+        // Returns User values by Comments
     public function getUserByComment($comments){
         $users = array();
         foreach ($comments as $comment) {
@@ -190,25 +188,19 @@ class DBModel {
         }
         return $users;
     }
-
-
-
+        // Returns User values by Post
     public function getUserByPost($posts){
         $users = array();
         foreach ($posts as $post) {
             $request = $this->db->prepare("SELECT * FROM User WHERE id = :id");
             $request->bindValue(':id', $post->userId, PDO::PARAM_INT);
             $request->execute();
-
             $user = $request->fetch(PDO::FETCH_ASSOC);
-
             $users[] = new User($user["id"], $user["username"],$user["password"],$user["email"],$user["name"],$user["surname"],$user["active"],$user["admin"]);
-
         }
-        //var_dump($users);
         return $users;
     }
-
+        // Creates a new Post
      public function createPost($post) {
         try {
             $request = $this->db->prepare("INSERT INTO Post(body, userId, topicId) VALUES(:body, :userId, :topicId)");
@@ -221,7 +213,7 @@ class DBModel {
             $e->getMessage();
         }
     }
-
+        // Creates a new Comment to a post
     public function createComment($comment) {
         try {
             $request = $this->db->prepare("INSERT INTO Comment(postID, userID, body) VALUES(:postId, :userId, :body)");
@@ -234,7 +226,7 @@ class DBModel {
             $e->getMessage();
         }
    }
-
+        // Returns User values
     public function getUserByName($userName){
         $request = $this->db->prepare("SELECT * FROM User WHERE username = :username");
         $request->bindValue(':username', $userName, PDO::PARAM_STR);
@@ -245,7 +237,7 @@ class DBModel {
         else
             return null;
     }
-
+        // Deletes a Post by ID
     public function deletePostById($id){
         $this->deleteCommentByPostId($id);
         $request = $this->db->prepare("DELETE FROM Post WHERE id = :id");
@@ -254,16 +246,15 @@ class DBModel {
         if($response){
             return true;
         }
-
         return false;
     }
-
+        // Deletes a Comment by ID
     public function deleteCommentByPostId($postId){
         $request = $this->db->prepare("DELETE FROM Comment WHERE postId = :id");
         $request->bindValue(":id", $postId, PDO::PARAM_INT);
         $response = $request->execute();
     }
-
+        // Deletes a Topic by ID
     public function deleteTopicById($id) {
 
         $this->deletePostByTopicId($id);
@@ -272,7 +263,7 @@ class DBModel {
         $request->bindValue(':id', $id, PDO::PARAM_STR);
         $request->execute();
     }
-
+        // Deletes a Post by Topic ID
     public function deletePostByTopicId($id){
         $posts = $this->getPostByTopicId($id);            // Get all posts related to topic id.
 
@@ -285,27 +276,24 @@ class DBModel {
         $request->bindValue(':id', $id, PDO::PARAM_STR);
         $request->execute();
     }
-
+        // Deletes a comment by ID
     public function deleteCommentById($id){
         $request = $this->db->prepare("DELETE FROM Comment WHERE id = :id");
         $request->bindValue(":id", $id, PDO::PARAM_INT);
         $response = $request->execute();
     }
-
-
+        // Searches database for a sendt string in Topic and returns Topic Values
     function getTopicSearchResults($searchKeyword){
         $topicArray = array();
         $request = $this->db->prepare("SELECT * FROM Topic WHERE title LIKE ('%" . $searchKeyword . "%') OR body LIKE ('%" . $searchKeyword . "%')");
         $request->bindParam(':searchWord', $searchKeyword, PDO::PARAM_STR);
         $request->execute();
-        //var_dump($request);
         while($row = $request->fetch(PDO::FETCH_ASSOC)){
           $topicArray[] = new Topic($row['id'], $row['title'], $row['body'], $row['userID'], $row['categoryId']);
         }
-
         return $topicArray;
     }
-
+        // Searches database for a sendt string in Post and returns Post Values
     function getPostSearchResults($searchKeyword){
         $postArray = array();
         $request = $this->db->prepare("SELECT * FROM Post WHERE body LIKE ('%" . $searchKeyword . "%')");
@@ -317,7 +305,7 @@ class DBModel {
         }
         return $postArray;
     }
-
+        // Searches database for a sendt string in Comment and returns Comment Values
     function getCommentSearchResults($searchKeyword){
         $commentArray = array();
         $request = $this->db->prepare("SELECT * FROM Comment WHERE body LIKE ('%" . $searchKeyword . "%')");

@@ -8,11 +8,7 @@
     <?php endforeach; ?>
   </ul>
 
-
-
-
-
-	<div id="post" class="postlist"> 
+	<div id="post" class="postlist">
 		<h1>Recent Topics</h1>
 		<hr>
 	<?php foreach($data[1] as $topic): ?>
