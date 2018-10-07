@@ -88,9 +88,9 @@
 
 		<?php if ($data[4]) {  ?>
 		<form class="comment_reply"  style="display: none;" data-id="<?php echo $postIndex; ?>" method="post" action="index.php">
-			<textarea class="form-control" rows="2" name="post_rep" ></textarea>
+			<textarea class="form-control" rows="2" name="post_rep" id="post_rep" ></textarea>
 			<input type="hidden" class="hidden" name="test" class="post_id" value=<?php echo $v1->id?>/>
-			<button type="submit" name="sub_comment" class="btn btn-primary" class="post_rep_sub">Submit</button>
+			<button type="submit" name="sub_comment" id="sub_comment" class="btn btn-primary" class="post_rep_sub">Submit</button>
 			<input type="hidden" name="redirect123" value=<?php echo $_SERVER['REQUEST_URI'];?>/>
 		</form>
 		<div id="comment" class="comment_reply">
@@ -132,7 +132,21 @@
   window.onload = function () {
   
     if(document.getElementById("submitText"))
-        document.getElementById("submitText").onclick = validateField
+        document.getElementById("submitText").onclick = validateField;
+
+    if (document.getElementById("sub_comment")) 
+    	document.getElementById("sub_comment").onclick = validateComment;
+}
+
+function validateComment(){
+	var commentArea=document.getElementById("post_rep").value;
+
+	if (commentArea && $.trim(commentArea).length != 0) {
+		document.getElementById("post_rep").setCustomValidity('');
+	}
+	else{
+		document.getElementById("post_rep").setCustomValidity("Can not post empty comment")
+	}
 }
 
 function validateField(){
@@ -145,6 +159,8 @@ function validateField(){
     document.getElementById("postarea").setCustomValidity("Can not post an empty text box");
   }
 }
+
+
 
 $(document).ready(function(){
 	$(document).on("click" , "button.rep" , function(){
