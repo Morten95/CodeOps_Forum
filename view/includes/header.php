@@ -18,7 +18,7 @@
 
 
       <?php if ((isset($_SESSION['username']))) : ?>
-      <a class="active" href="index.php?insert=1"><i class="fa fa-plus"></i>  Insert Topic</a>
+      <a class="active" href="index.php?insert=1&csrf=<?php echo $_SESSION["token"] ?>"><i class="fa fa-plus"></i>  Insert Topic</a>
       <?php endif; ?>
       <?php if (isset($_SESSION['username'])) { ?>
       <div class="Search bar">

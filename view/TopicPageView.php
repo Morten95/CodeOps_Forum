@@ -107,11 +107,11 @@
 	<?php if ($data[4]) { ?>
 		<br>
 		<form method="post"  action="index.php">
-			<textarea class="area" name="postarea"></textarea>
+			<textarea class="area" name="postarea" id="postarea"></textarea>
 			<input type="hidden" name="topicId" value=<?php echo $_GET['id']?>/>
 			<input type="hidden" name="redirect" value=<?php echo $_SERVER['REQUEST_URI'];?>/>
 
-			<input type="submit" value="Submit" name="submitText"/>
+			<input style="margin-left: 48%;" type="submit" value="Submit" name="submitText" id="submitText"/>
 		</form>
 
 		<?php //echo $_POST['postarea']?>
@@ -129,6 +129,23 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <script type="text/javascript">
+  window.onload = function () {
+  
+    if(document.getElementById("submitText"))
+        document.getElementById("submitText").onclick = validateField
+}
+
+function validateField(){
+  var postArea =document.getElementById("postarea").value;
+
+  if (postArea && $.trim(postArea).length != 0 ) {
+    document.getElementById("postarea").setCustomValidity(''); 
+  }
+  else {
+    document.getElementById("postarea").setCustomValidity("Can not post an empty text box");
+  }
+}
+
 $(document).ready(function(){
 	$(document).on("click" , "button.rep" , function(){
 		if($(this).data("id") == $(this).parents().children().closest("form.comment_reply").data("id")){

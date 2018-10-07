@@ -5,15 +5,8 @@ include("Post.php");
 include("User.php");
 include("Comment.php");
 
-/** The Model is the class holding data about a collection of books.
- * @author Rune Hjelsvold
- * @see http://php-html.net/tutorials/model-view-controller-in-php/ The tutorial code used as basis.
- */
+
 class DBModel {
-    /**
-      * The PDO object for interfacing the database
-      *
-      */
     protected $db = null;
 
     public function __construct($db = null)
@@ -25,8 +18,6 @@ class DBModel {
 		else
 		{
         try {
-            // Create PDO connection
-
 			$this->db = new PDO("mysql:host=localhost;dbname=CodeOps_database;", "root", "");
 		} catch(PDOException $e) {
 			echo "Error ocurred!";

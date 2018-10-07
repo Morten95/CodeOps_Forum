@@ -1,22 +1,11 @@
 <?php
 include_once("model/DBModel.php");
-include_once("view/ErrorView.php");
 include_once("view/View.php");
 include_once("model/User.php");
 include_once("model/Category.php");
 include_once("model/Topic.php");
 include_once("model/Post.php");
 include_once("model/Comment.php");
-//include_once("view/SearchResults.php");
-
-/** The Controller is responsible for handling user requests, for exchanging data with the Model,
- * and for passing user response data to the various Views.
- * @author Rune Hjelsvold
- * @see model/Model.php The Model class holding book data.
- * @see view/viewbook.php The View class displaying information about one book.
- * @see view/booklist.php The View class displaying information about all books.
- * @see http://php-html.net/tutorials/model-view-controller-in-php/ The tutorial code used as basis.
- */
 
 class Controller {
 	public $model;
@@ -26,8 +15,6 @@ class Controller {
 	       $this->model = new DBModel();
 	}
 
-/** The one function running the controller code.
- */
 	public function invoke() {
 		//loading front page
 		$categories = $this->model->getAllCategories();
@@ -85,7 +72,11 @@ class Controller {
 
 		// REGISTER USER:
 		else if(isset($_GET['register'])) {
-			$view->create("view/Register.php", []);
+			if(!isset($_SESSION["username"])){
+				$view->create("view/Register.php", []);
+			} else {
+			 	header('Location: index.php');
+			}
 		}
 
 		else if (isset($_POST['reg'])) {
@@ -105,7 +96,11 @@ class Controller {
 		/////////////POST TOPIC
 
 		else if (isset($_GET['insert'])) {
-		    $view->create("view/InsertView.php", [$categories]);
+			if($_GET["csrf"] == $_SESSION["token"]){
+		    	$view->create("view/InsertView.php", [$categories]);
+			} else {
+			 	header('Location: index.php');
+			}
 		}
 
 		else if(isset($_POST['submitText'])) {
@@ -160,7 +155,6 @@ class Controller {
 			 	$view->create("view/SearchResults.php", [$searchKeyword, $topic, $post, $comment]);
 		 	} else {
 			 header('Location: index.php');
-
 		 	}
 
 		 }
