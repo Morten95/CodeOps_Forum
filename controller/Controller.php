@@ -163,13 +163,20 @@ class Controller {
 		 }
 
 		 else if (isset($_GET['category'])) {
-		 	if(isset($_SESSION["username"])){
-			 	$user = $this->model->getUserByName($_SESSION["username"]);
+		 	if( $_GET["csrf"] == $_SESSION["token"]){
+
+			 	if(isset($_SESSION["username"])){
+				 	$user = $this->model->getUserByName($_SESSION["username"]);
+			 	} else {
+			 		$user = null;
+			 	}
+	
+				$topics = $this->model->getAllTopicsById($_GET['category']);
+				$view->create("view/TopicView.php", [$topics, isset($_SESSION["username"]), $user]);
 		 	} else {
-		 		$user = null;
+				header('Location: ' . $_POST['redirect']);
 		 	}
-			 $topics = $this->model->getAllTopicsById($_GET['category']);
-			 $view->create("view/TopicView.php", [$topics, isset($_SESSION["username"]), $user]);
+
 		 }
 
 		 else if (isset($_POST['topicIdd'])) {

@@ -11,7 +11,7 @@
 	<td>
     <form action="index.php" method="post">
       <input type="hidden" name="topicIdd" value="<?php echo $topic->id ?>">
-      <?php if($data[1] && $data[2]->admin) { ?>
+      <?php if(($data[1] && $data[2] ) && $data[2]->admin) { ?>
         <button type="submit" class="btn btn-danger del" value="Delete" data-id=""><i class="fa fa-trash"></i></button>
       <?php } ?>
     </form>
