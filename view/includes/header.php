@@ -20,12 +20,14 @@
       <?php if ((isset($_SESSION['username']))) : ?>
       <a class="active" href="index.php?insert=1"><i class="fa fa-plus"></i>  Insert Topic</a>
       <?php endif; ?>
+      <?php if (isset($_SESSION['username'])) { ?>
       <div class="Search bar">
-      <form method="post" action="/CodeOps_Forum/index.php?search=1">
-        <input type="text" name="Search">
-        <input type="submit" value="Search ">
-      </form>
-    </div>
+        <form method="post" action="/CodeOps_Forum/index.php?search=1">
+          <input type="text" name="Search">
+          <input type="submit" value="Search ">
+        </form>
+      </div>
+      <?php } ?>
       <div class="login-container">
 	<?php if (!(isset($_SESSION['username']))) : ?>
 	<form action="index.php" method="POST">
@@ -35,7 +37,7 @@
 	  <button type="submit"id="log" name="log">Login</button>
 	</form>
 	<?php else : ?>
-	<form action="index.php" method="POST">
+	<form action="index.php?csrf="<?php echo $_SESSION["token"]; ?> method="POST">
  	 <p id="LogginText">Logged in as <?php echo $_SESSION['username']; ?></p>
 	  <input type="hidden" name="logout">
 	  <button type="submit">Logout</button>

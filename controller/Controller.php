@@ -41,6 +41,7 @@ class Controller {
 		   
 		   if($feedback['status'] == "OK") {
 	    	        $_SESSION["username"] = $user->username;
+	    	        $_SESSION["token"] = md5(uniqid(mt_rand(), true));
 	    	        header("Refresh:0");
 		   }
 		   else {
@@ -142,16 +143,19 @@ class Controller {
 			}	else {
 				$topic = new Topic(0, filter_var($_POST['title'], FILTER_SANITIZE_STRING), filter_var($_POST['body'], FILTER_SANITIZE_STRING), $userId, (int)$_POST['categoryId']);
 				$this->model->createTopic($topic);
+				
+				header("Refresh:0");
 				$view->create("view/HomePageView.php", [$categories, $latestTopics]);
 			}
 		 }else if (isset($_GET['search'])) {
-			 $searchKeyword = $_POST["Search"];
-			 $topic = $this->model->getTopicSearchResults($searchKeyword);
-			 $post = $this->model->getPostSearchResults($searchKeyword);
-			 $comment = $this->model->getCommentSearchResults($searchKeyword);
-
-			 $view->create("view/SearchResults.php", [$searchKeyword, $topic, $post, $comment]);
-
+		 	if($_POST["Search"] != ""){
+				$searchKeyword = $_POST["Search"];
+			 	$topic = $this->model->getTopicSearchResults($searchKeyword);
+			 	$post = $this->model->getPostSearchResults($searchKeyword);
+			 	$comment = $this->model->getCommentSearchResults($searchKeyword);
+	
+			 	$view->create("view/SearchResults.php", [$searchKeyword, $topic, $post, $comment]);
+		 	}
 		 }
 		 else if (isset($_POST['deletePost'])){
 			 $this->model->deletePostById(str_replace("/","",$_POST["postId"]));
@@ -172,10 +176,11 @@ class Controller {
 		 else if (isset($_POST['topicIdd'])) {
 			 $this->model->deleteTopicById($_POST['topicIdd']);
 			 $view->create("view/HomePageView.php", [$categories, $latestTopics]);
-				 header("Refresh:0");
+			header("Refresh:0");
 		 }
 
 		else {
+
 			$view->create("view/HomePageView.php", [$categories, $latestTopics]);
 		}
 	}
