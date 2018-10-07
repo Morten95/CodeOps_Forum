@@ -17,10 +17,9 @@ include_once("model/Comment.php");
  * @see http://php-html.net/tutorials/model-view-controller-in-php/ The tutorial code used as basis.
  */
 
-function test_input($data) {
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
+function test_input($data) { //FIX FUNCTION
+  /*$data = trim($data); // Tar vekk ekstra space
+  $data = stripslashes($data); // Tar vekk '/'*/
   return $data;
 }
 
@@ -89,56 +88,15 @@ class Controller {
 
 			$userErr = "";
 			$reguser = test_input($_POST['user']);
-			$regpw = test_input(password_hash($_POST['password_1'], PASSWORD_DEFAULT));
-			$regmail = test_input($_POST['email']);
+			$regpw = test_input($_POST['password_1']);
+			$regmail = test_input($_POST['email']); // FILTER_VAR() - For Input FILTER_SANITIZE_EMAIL
 			$regfname = test_input($_POST['fname']);
 			$reglname = test_input($_POST['lname']);
 
-			if (empty($_POST['user'])) {
-				echo $userErr = "Username is required";
-			}
-
-			else if(!preg_match("/[a-zA-Z1-9_]+/",$reguser)) {
-					echo $userErr = "ERROR! Can only contain letters and numbers!";
-			}
-
-			else if (empty($_POST['password_1'])) {
-				echo $userErr = "Password is required";
-			}
-
-			else if(!preg_match("/[A-Za-z0-9_.&%@-]+/",$regpw)) {
-					echo $userErr = "ERROR! Password cannot contain some of these characters!";
-			}
-
-			else if (empty($_POST['email'])) {
-				echo $userErr = "Email is required";
-			}
-
-			else if (!filter_var($regmail, FILTER_VALIDATE_EMAIL)) {
-					echo $userErr = "ERROR! Invalid Email format!";
-			}
-
-			else if (empty($_POST['fname'])) {
-				echo $userErr = "First name is required";
-			}
-
-			else if(!preg_match("/[A-Za-z-]+/",$regfname)) {
-					echo $userErr = "ERROR! First name can only contain letters!";
-			}
-
-			else if (empty($_POST['lname'])) {
-				echo $userErr = "Last name is required";
-			}
-
-			else if(!preg_match("/[A-Za-z-]+/",$reglname)) {
-					echo $userErr = "ERROR! Last name can only contain letters!";
-			}
-
-			else {
-				$newUser = new User(-1,	$reguser = test_input($_POST['user']), $regpw = password_hash($_POST['password_1'], PASSWORD_DEFAULT), $regmail = $_POST['email'], $regfname = $_POST['fname'], $reglname = $_POST['lname'],0,0);
+			
+				$newUser = new User(-1,	$reguser, $regpw = password_hash($_POST['password_1'], PASSWORD_DEFAULT), $regmail = $_POST['email'], $regfname = $_POST['fname'], $reglname = $_POST['lname'],0,0);
 				$this->model->registerUser($newUser);
 		   		header("Refresh:0");
-		   	}
 		}
 
 		else if(isset($_POST['submitText'])) {

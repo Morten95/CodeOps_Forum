@@ -44,7 +44,7 @@
 		    				
 		    						<?php }?>
 		    					<?php } ?>
-		    								<?php echo $com->body . "<br>"; ?>
+		    								<?php echo $com->body . "<br>"; ?> <!--htmlentities-->
 		    								</small>
 		    							</span> 
 
