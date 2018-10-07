@@ -49,7 +49,8 @@
 <script type="text/javascript">
   window.onload = function () {
   
-    document.getElementById("log").onclick = validateField;
+    if(document.getElementById("log"))
+        document.getElementById("log").onclick = validateField
 }
 
 function validateField(){
