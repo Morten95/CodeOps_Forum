@@ -38,7 +38,7 @@ class Controller {
 		   $userData = filter_var($_POST['username'],FILTER_SANITIZE_STRING);
 		   $user = new User(-1, $userData,$_POST['password'], "", "", "", 0, 0);
 		   $feedback = $this->model->authenticate($user);
-		   
+
 		   if($feedback['status'] == "OK") {
 	    	        $_SESSION["username"] = $user->username;
 	    	        $_SESSION["token"] = md5(uniqid(mt_rand(), true));
@@ -95,7 +95,7 @@ class Controller {
 			$regfname = filter_var($_POST['fname'],FILTER_SANITIZE_STRING);
 			$reglname = filter_var($_POST['lname'],FILTER_SANITIZE_STRING);
 
-			
+
 				$newUser = new User(-1,	$reguser, password_hash($_POST['password_1'], PASSWORD_DEFAULT), $regmail, $regfname, $reglname,0,0);
 
 				$this->model->registerUser($newUser);
@@ -116,7 +116,7 @@ class Controller {
 					echo "Can not post empty comment";
 				}
 
-				else { 
+				else {
 					$post = new Post(0, filter_var($_POST['postarea'], FILTER_SANITIZE_STRING), $user->id, $_POST['topicId']);
 					$this->model->createPost($post);
 					$_GET['id'] = $_POST['topicId'];
@@ -145,17 +145,18 @@ class Controller {
 			}	else {
 				$topic = new Topic(0, filter_var($_POST['title'], FILTER_SANITIZE_STRING), filter_var($_POST['body'], FILTER_SANITIZE_STRING), $userId, (int)$_POST['categoryId']);
 				$this->model->createTopic($topic);
-				
+
 				header("Refresh:0");
 				$view->create("view/HomePageView.php", [$categories, $latestTopics]);
 			}
 		 }else if (isset($_GET['search'])) {
 		 	if($_POST["Search"] != ""){
-				$searchKeyword = $_POST["Search"];
+				$searchKeywordDirty = $_POST["Search"];
+				$searchKeyword = htmlentities($searchKeywordDirty, ENT_QUOTES | ENT_HTML5, 'UTF-8');
 			 	$topic = $this->model->getTopicSearchResults($searchKeyword);
 			 	$post = $this->model->getPostSearchResults($searchKeyword);
 			 	$comment = $this->model->getCommentSearchResults($searchKeyword);
-	
+
 			 	$view->create("view/SearchResults.php", [$searchKeyword, $topic, $post, $comment]);
 		 	} else {
 			 header('Location: index.php');
