@@ -22,7 +22,7 @@
       <?php endif; ?>
       <?php if (isset($_SESSION['username'])) { ?>
       <div class="Search bar">
-        <form method="post" action="/CodeOps_Forum/index.php?search=1">
+        <form method="post" action="/CodeOps_Forum/index.php?search=1&csrf=<?php echo $_SESSION["token"] ?>">
           <input type="text" name="Search">
           <button type="submit" value="Search">Search</button>
         </form>
