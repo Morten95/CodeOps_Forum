@@ -1,6 +1,5 @@
 <?php
 include_once("model/DBModel.php");
-include_once("view/ErrorView.php");
 include_once("view/View.php");
 include_once("model/User.php");
 include_once("model/Category.php");
