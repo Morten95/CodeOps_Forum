@@ -139,7 +139,7 @@ class Controller {
 			
 				
 		 }else if (isset($_GET['search'])) {
-		 	if($_POST["Search"] != ""){
+		 	if($_POST["Search"] != "" && $_GET["csrf"] == $_SESSION["token"]){
 				$searchKeywordDirty = $_POST["Search"];
 				$searchKeyword = htmlentities($searchKeywordDirty, ENT_QUOTES | ENT_HTML5, 'UTF-8');
 			 	$topic = $this->model->getTopicSearchResults($searchKeyword);
