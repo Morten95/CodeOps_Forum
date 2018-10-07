@@ -44,8 +44,6 @@
 	<?php endif; ?>
       </div>
     </div>
-    <h1>This is the header</h1>
-
 
 <script type="text/javascript">
   window.onload = function () {
