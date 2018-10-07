@@ -10,7 +10,7 @@ The group choose the mvc model,(Model, view, controller) and a simple local DB. 
 
 Installation Guide UNIX/LINUX  
 ---------
-Prerequisites: 32-bit or 64-bit machine 
+Prerequisites: 32-bit or 64-bit machine
 
 Download  XAMPP from the page :  https://www.apachefriends.org/index.html
 1. Choose Download  for LINUX.
@@ -40,12 +40,12 @@ save it on the choosen folder(usually the download folder).
 17. Now click import and then browse
 18. Include database by going to this path:  `/opt/lampp/htdocs/database-files` and upload the only file up.   
 and click go.
-19. Now you can go to your webbrowser and write `localhost/CodeOps_Forum`, and the forum should appear with a database. 
+19. Now you can go to your webbrowser and write `localhost/CodeOps_Forum`, and the forum should appear with a database.
 
 
 Installation Guide Windows       
 ---------
-Prerequisites: 32-bit or 64-bit machine 
+Prerequisites: 32-bit or 64-bit machine
 
 Download  XAMPP from the ´https://www.apachefriends.org/index.html´
 
@@ -69,20 +69,20 @@ Download  XAMPP from the ´https://www.apachefriends.org/index.html´
 16. Make sure to upload DB. Go to `localhost/phpmyadmin`. Click databases.
 17.  Now click import and then browse
 18. Go to where you saved the database then `htdocs/database-files` and upload the only file with a .sql extension. path: `C:\xampp\htdocs\CodeOps_Forum\datafiles`
-19. Go to `localhost/CodeOps_Forum`, and the forum will appear. 
+19. Go to `localhost/CodeOps_Forum`, and the forum will appear.
 
 
 
 
 Authors
 ------
-Zohaib Butt  
-Anders Bjørklund Jensen   
-Jostein Vole Hage
-Daniel Siqveland  
-Abdi Mo 
-Yobe Najar
-Morten Bjerke
+  Zohaib Butt  
+  Anders Bjørklund Jensen     
+  Jostein VH  
+  Daniel EKS    
+  Abdi M  
+  Yobe Najar  
+  Morten Bjerke
 
 
 
