@@ -39,8 +39,6 @@ class DBModel {
             } else {
                 $data['status'] = "Error";
                 $data ['errormessage'] = 'Something went wrong';
-                //$data['plain_pass'] = $user->password;
-                //$data['hash_pass_db'] = $results['password'];
             }
 	    return $data;
     }
@@ -53,7 +51,6 @@ class DBModel {
             while($result = $request->fetch(PDO::FETCH_ASSOC)) {
 	    		 $topics[] = new Topic($result["id"], $result["title"], $result["body"], $result["userID"], $result["categoryId"]);
 	}
-
 	    return $topics;
     }
 
@@ -93,7 +90,6 @@ class DBModel {
             $stmt->bindValue(':act', $user->active,PDO::PARAM_INT);
             $stmt->bindValue(':adm', $user->admin,PDO::PARAM_INT);
 
-
             $stmt->execute();
             $user->id = $this->db->lastInsertId();
         }
@@ -107,7 +103,6 @@ class DBModel {
         $stmt = $this->db->query("SELECT * FROM Topic ORDER BY id DESC LIMIT 3");
 	if($stmt) {
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-           // var_dump($row);
             $topic[] = new Topic($row["id"], $row["title"], $row["body"], $row["userID"], $row["categoryId"]);
         }}
 
@@ -163,10 +158,8 @@ class DBModel {
         $comment = array();
         foreach ($postArray as $post){
             $stmt = $this->db->prepare("SELECT * FROM Comment WHERE postID = :id");
-            //var_dump($post);
             $stmt->bindValue(':id', $post->id, PDO::PARAM_INT);
             $stmt->execute();
-            //var_dump($stmt);
 
             while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $comment[] = new Comment($row['id'], $row['postID'], $row['userID'], $row['body']);
@@ -299,7 +292,6 @@ class DBModel {
         $request = $this->db->prepare("SELECT * FROM Post WHERE body LIKE ('%" . $searchKeyword . "%')");
         $request->bindValue(':searchWord', $searchKeyword, PDO::PARAM_STR);
         $request->execute();
-        //var_dump($request);
         while($row = $request->fetch(PDO::FETCH_ASSOC)){
           $postArray[] = new Post($row['id'], $row['body'], $row['userId'], $row['topicId']);
         }
@@ -311,7 +303,6 @@ class DBModel {
         $request = $this->db->prepare("SELECT * FROM Comment WHERE body LIKE ('%" . $searchKeyword . "%')");
         $request->bindValue(':searchWord', $searchKeyword, PDO::PARAM_STR);
         $request->execute();
-        //var_dump($request);
         while($row = $request->fetch(PDO::FETCH_ASSOC)){
           $commentArray[] = new Comment($row['id'], $row['postID'], $row['userID'], $row['body']);
         }
