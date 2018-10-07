@@ -37,10 +37,9 @@
 	  <button type="submit"id="log" name="log">Login</button>
 	</form>
 	<?php else : ?>
-	<form action="index.php?csrf="<?php echo $_SESSION["token"]; ?> method="POST">
+	<form action="index.php?csrf=<?php echo $_SESSION['token']; ?>" method="POST">
  	 <p id="LogginText">Logged in as <?php echo $_SESSION['username']; ?></p>
-	  <input type="hidden" name="logout">
-	  <button type="submit">Logout</button>
+	  <button type="submit" name="logout">Logout</button>
 	</form>
 	<?php endif; ?>
       </div>

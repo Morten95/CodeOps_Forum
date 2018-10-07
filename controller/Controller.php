@@ -53,8 +53,10 @@ class Controller {
 		}
 
 		else if (isset($_POST['logout'])) {
-		   session_unset();
-		   session_destroy();
+			if($_GET["csrf"] == $_SESSION["token"]){
+		   		session_unset();
+		   		session_destroy();
+			}
 
 		   header("Refresh:0");
 		}
@@ -168,8 +170,12 @@ class Controller {
 		 }
 
 		 else if (isset($_GET['category'])) {
+		 	if(isset($_SESSION["username"])){
+			 	$user = $this->model->getUserByName($_SESSION["username"]);
+		 	} else {
+		 		$user = null;
+		 	}
 			 $topics = $this->model->getAllTopicsById($_GET['category']);
-			 $user = $this->model->getUserByName($_SESSION["username"]);
 			 $view->create("view/TopicView.php", [$topics, isset($_SESSION["username"]), $user]);
 		 }
 
