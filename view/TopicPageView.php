@@ -2,12 +2,12 @@
 
 
 	<div class="postlist">
-		<h1><?php echo $data[0]->title ?>	</h1>
+		<h1><?php echo htmlentities($data[0]->title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>	</h1>
 		<hr>
 		<div class="threaduser">
 			<p><?php echo "User: " . $data[1]->username ?></p>
 		</div>
-		<p><?php echo $data[0]->body ?></p>
+		<p><?php echo htmlentities($data[0]->body, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></p>
 	</div>
 
 
@@ -44,7 +44,7 @@
 
 
 		</div>
-		<p><?php echo $v1->body; ?> </p>
+		<p><?php echo htmlentities($v1->body, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> </p>
 			<?php if($data[5]) { ?>
 	    		<div class="comment_body" style="display: block";>    <!--- FOR EACH POST I PRINT THE COMMENT & USERNAME ! -->
 	    			<?php foreach ($data[5] as $com) { ?>
@@ -73,7 +73,7 @@
 
 	    						<?php }?>
 	    					<?php } ?>
-	    								<?php echo $com->body . "<br>"; ?>
+	    								<?php echo htmlentities($com->body, ENT_QUOTES | ENT_HTML5, 'UTF-8') . "<br>"; ?>
 
 
 	    								</small>
