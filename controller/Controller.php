@@ -85,7 +85,11 @@ class Controller {
 
 		// REGISTER USER:
 		else if(isset($_GET['register'])) {
-			$view->create("view/Register.php", []);
+			if(!isset($_SESSION["username"])){
+				$view->create("view/Register.php", []);
+			} else {
+			 	header('Location: index.php');
+			}
 		}
 
 		else if (isset($_POST['reg'])) {
@@ -159,7 +163,6 @@ class Controller {
 			 	$view->create("view/SearchResults.php", [$searchKeyword, $topic, $post, $comment]);
 		 	} else {
 			 header('Location: index.php');
-
 		 	}
 
 		 }
