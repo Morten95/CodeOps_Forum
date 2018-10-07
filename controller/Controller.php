@@ -116,10 +116,12 @@ class Controller {
 		else if (isset($_POST['sub_comment'])){
 			$user = $this->model->getUserByName($_SESSION['username']);
 
-				$comment = new Comment(0, $_POST['test'], $user->id, filter_var($_POST['post_rep'], FILTER_SANITIZE_STRING));
-				$this->model->createComment($comment);
-				$_GET['id'] = $_POST['topicId'];
-				header('Location: ' . $_POST['redirect123']);
+			$comment = new Comment(0, $_POST['test'], $user->id, filter_var($_POST['post_rep'], FILTER_SANITIZE_STRING));
+			$this->model->createComment($comment);
+			$_GET['id'] = $_POST['topicId'];
+			$id = str_replace("/CodeOps_Forum/index.php?id=","",$_POST['redirect123']);
+			$id = str_replace("/", "", $id);
+			header('Location: index.php?id='. str_replace("/","",$id));
 		}
 		else if (isset($_POST['categoryId'])) {
 			$userId = $this->model->getUserIdByUsername($_SESSION['username']);
