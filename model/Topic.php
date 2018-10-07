@@ -7,9 +7,9 @@ class Topic {
       public $userId;
       public $categoryId;
 
-      
+
       public function __construct($id, $title, $body, $userId, $categoryId){
-            $this->id = $id;
+        $this->id = $id;
       	$this->title = $title;
       	$this->body = $body;
       	$this->userId = $userId;
@@ -18,7 +18,7 @@ class Topic {
 
       public function createTopic($topic) {
 
-            $db = new PDO("mysql:host=localhost;dbname=codeops_database;", "root", ""); 
+            $db = new PDO("mysql:host=localhost;dbname=codeops_database;", "root", "");
 	    $request = $db->prepare("INSERT INTO Post(id, title, body, userId, categoryId) VALUE(:id, :title, :body, :userId, :categoryId)");
 	    $request->bindValue(':id', $this->id, PDO::PARAM_INT);
 	    $request->bindValue(':title', $this->title, PDO::PARAM_STR);

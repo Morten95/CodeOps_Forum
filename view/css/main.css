@@ -182,7 +182,7 @@ p{
 }
 
 p#LogginText{
-  margin: 10px; 
+  margin: 10px;
 }
 
 .userBox {
@@ -197,10 +197,11 @@ p#LogginText{
 }
 
 .userBox button.btn{
-  margin-top: 59px;
-  margin-right: 45px;
-  margin-left: 223px;
-  margin-bottom: 10px;
+    margin-top: 10%;
+    margin-right: -22%;
+    margin-left: 32%;
+    margin-bottom: 10%;
+
 }
 
 input[type="image"] {
@@ -269,6 +270,31 @@ p#topicBody {
     margin-top: 223px;
     margin-left: 21px;
     margin-bottom: 25px;
+}
+
+button.btn.btn-danger.delCom {
+    margin-right: 1%;
+}
+
+.postlist .TopicSearch {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.postlist .PostSearch {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.postlist .CommentSearch {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.Search.bar {
+    margin-left: 1%;
+    float: left;
+}
 
 @media screen and (max-width: 600px) {
   .topnav .login-container {
@@ -283,7 +309,6 @@ p#topicBody {
     padding: 14px;
   }
   .topnav input[type=text] {
-    border: 1px solid #ccc;  
+    border: 1px solid #ccc;
   }
 }
-

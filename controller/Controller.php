@@ -7,9 +7,10 @@ include_once("model/Category.php");
 include_once("model/Topic.php");
 include_once("model/Post.php");
 include_once("model/Comment.php");
+//include_once("view/SearchResults.php");
 
 /** The Controller is responsible for handling user requests, for exchanging data with the Model,
- * and for passing user response data to the various Views. 
+ * and for passing user response data to the various Views.
  * @author Rune Hjelsvold
  * @see model/Model.php The Model class holding book data.
  * @see view/viewbook.php The View class displaying information about one book.
@@ -17,20 +18,14 @@ include_once("model/Comment.php");
  * @see http://php-html.net/tutorials/model-view-controller-in-php/ The tutorial code used as basis.
  */
 
-function test_input($data) { //FIX FUNCTION
-  /*$data = trim($data); // Tar vekk ekstra space
-  $data = stripslashes($data); // Tar vekk '/'*/
-  return $data;
-}
-
 class Controller {
 	public $model;
-	
-	public function __construct() {  
+
+	public function __construct() {
 	       session_start();
 	       $this->model = new DBModel();
-	} 
-	
+	}
+
 /** The one function running the controller code.
  */
 	public function invoke() {
@@ -40,15 +35,15 @@ class Controller {
 		$view = new View();
 
 		if (isset($_POST['username']) && isset($_POST['password'])) {
-		   $user = new User(-1, $_POST['username'],$_POST['password'], "", "", "", 0, 0);
-		   $data['username'] = $_POST['username'];
-		   $data['password'] = $_POST['password'];
+		   $userData = filter_var($_POST['username'],FILTER_SANITIZE_STRING);
+		   $user = new User(-1, $userData,$_POST['password'], "", "", "", 0, 0);
 		   $feedback = $this->model->authenticate($user);
-
+		   
 		   if($feedback['status'] == "OK") {
 	    	        $_SESSION["username"] = $user->username;
 	    	        header("Refresh:0");
-		   } else {
+		   }
+		   else {
 			echo '<script>
 			alert("Wrong username or password");
 			</script>';
@@ -66,73 +61,120 @@ class Controller {
 		else if(isset($_GET['id'])) {
 			$topic = $this->model->getTopicById($_GET['id']);
 			$topicUser = $this->model->getUserByTopic($topic->userId);
-			
+
 			$post = $this->model->getPostByTopicId($topic->id);
 			$postUser = $this->model->getUserByPost($post);
 
 			// Fetch comments of posts
 			$comments = $this->model->getCommentByPostId($post);
-			
+
 			// Fetch user of comments of POSTS
 			$userComments = $this->model->getUserByComment($comments);
-		
-			$view->create("view/TopicPageView.php", [$topic, $topicUser, $post, $postUser, isset($_SESSION["username"]), $comments, $userComments]);
+
+			if(isset($_SESSION["username"])){
+				$loggedUser = $this->model->getUserByName($_SESSION["username"]);
+			} else {
+				$loggedUser = null;
+			}
+
+			$view->create("view/TopicPageView.php", [$topic, $topicUser, $post, $postUser, isset($_SESSION["username"]), $comments, $userComments, $loggedUser]);
 		}
 
 		// REGISTER USER:
 		else if(isset($_GET['register'])) {
 			$view->create("view/Register.php", []);
 		}
-		
+
 		else if (isset($_POST['reg'])) {
 
-			$userErr = "";
-			$reguser = test_input($_POST['user']);
-			$regpw = test_input($_POST['password_1']);
-			$regmail = test_input($_POST['email']); // FILTER_VAR() - For Input FILTER_SANITIZE_EMAIL
-			$regfname = test_input($_POST['fname']);
-			$reglname = test_input($_POST['lname']);
+			$reguser = filter_var($_POST['userr'],FILTER_SANITIZE_STRING);
+			$regmail = filter_var($_POST['email'],FILTER_SANITIZE_EMAIL); // FILTER_VAR() - For Input FILTER_SANITIZE_EMAIL
+			$regfname = filter_var($_POST['fname'],FILTER_SANITIZE_STRING);
+			$reglname = filter_var($_POST['lname'],FILTER_SANITIZE_STRING);
 
 			
-				$newUser = new User(-1,	$reguser, $regpw = password_hash($_POST['password_1'], PASSWORD_DEFAULT), $regmail = $_POST['email'], $regfname = $_POST['fname'], $reglname = $_POST['lname'],0,0);
+				$newUser = new User(-1,	$reguser, password_hash($_POST['password_1'], PASSWORD_DEFAULT), $regmail, $regfname, $reglname,0,0);
+
 				$this->model->registerUser($newUser);
 		   		header("Refresh:0");
 		}
 
-		else if(isset($_POST['submitText'])) {
-			$user = $this->model->getUserByName($_SESSION['username']);
-
-
-			$post = new Post(0, $_POST['postarea'], $user->id, $_POST['topicId']);
-			$this->model->createPost($post);
-			$_GET['id'] = $_POST['topicId'];
-			header('Location: '. $_POST['redirect']);
-
-		}
+		/////////////POST TOPIC
 
 		else if (isset($_GET['insert'])) {
-		    $view->create("view/InsertView.php", [$categories]); 
+		    $view->create("view/InsertView.php", [$categories]);
 		}
-			// COMMENT
+
+		else if(isset($_POST['submitText'])) {
+
+			$user = $this->model->getUserByName($_SESSION['username']);
+
+				if (empty($_POST['postarea'])) {
+					echo "Can not post empty comment";
+				}
+
+				else { 
+					$post = new Post(0, filter_var($_POST['postarea'], FILTER_SANITIZE_STRING), $user->id, $_POST['topicId']);
+					$this->model->createPost($post);
+					$_GET['id'] = $_POST['topicId'];
+					header('Location: '. $_POST['redirect']);
+				}
+		}	// COMMENT
 		else if (isset($_POST['sub_comment'])){
-			$user = $this->model->getUserByName($_SESSION['username']); 
-		
-			$comment = new Comment(0, $_POST['test'], $user->id, $_POST['post_rep']);
+			$user = $this->model->getUserByName($_SESSION['username']);
+
+			if (empty($_POST['post_rep'])) {
+				echo "Can not post empty comment";
+			} else {
+			$comment = new Comment(0, $_POST['test'], $user->id, filter_var($_POST['post_rep'], FILTER_SANITIZE_STRING));
 			$this->model->createComment($comment);
 			$_GET['id'] = $_POST['topicId'];
 			header('Location: ' . $_POST['redirect123']);
-
 		}
-
+	}
 		else if (isset($_POST['categoryId'])) {
-		     $userId = $this->model->getUserIdByUsername($_SESSION['username']);
-		     $topic = new Topic(0, $_POST['title'], $_POST['body'], $userId, (int)$_POST['categoryId']);
-		     $this->model->createTopic($topic);
-		     $view->create("view/HomePageView.php", [$categories, $latestTopics]);
+			$userId = $this->model->getUserIdByUsername($_SESSION['username']);
+
+			if (empty($_POST['title'])) {
+				echo "Topic must contain title";
+			}	else if (empty($_POST['body'])) {
+				echo "Can not post empty topic";
+			}	else {
+				$topic = new Topic(0, filter_var($_POST['title'], FILTER_SANITIZE_STRING), filter_var($_POST['body'], FILTER_SANITIZE_STRING), $userId, (int)$_POST['categoryId']);
+				$this->model->createTopic($topic);
+				$view->create("view/HomePageView.php", [$categories, $latestTopics]);
+			}
+		 }else if (isset($_GET['search'])) {
+			 $searchKeyword = $_POST["Search"];
+			 $topic = $this->model->getTopicSearchResults($searchKeyword);
+			 $post = $this->model->getPostSearchResults($searchKeyword);
+			 $comment = $this->model->getCommentSearchResults($searchKeyword);
+
+			 $view->create("view/SearchResults.php", [$searchKeyword, $topic, $post, $comment]);
 
 		 }
+		 else if (isset($_POST['deletePost'])){
+			 $this->model->deletePostById(str_replace("/","",$_POST["postId"]));
+			 header('Location: ' . $_POST['redirect']);
+		 }
 
-		else { 
+		 else if (isset($_POST['deleteComment'])){
+			 $this->model->deleteCommentById(str_replace("/","",$_POST["commentId"]));
+			 header('Location: ' . $_POST['redirect']);
+		 }
+
+		 else if (isset($_GET['category'])) {
+			 $topics = $this->model->getAllTopicsById($_GET['category']);
+			 $view->create("view/TopicView.php", [$topics, isset($_SESSION["username"])]);
+		 }
+
+		 else if (isset($_POST['topicIdd'])) {
+			 $this->model->deleteTopicById($_POST['topicIdd']);
+			 $view->create("view/HomePageView.php", [$categories, $latestTopics]);
+				 header("Refresh:0");
+		 }
+
+		else {
 			$view->create("view/HomePageView.php", [$categories, $latestTopics]);
 		}
 	}

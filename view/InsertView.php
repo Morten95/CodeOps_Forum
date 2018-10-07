@@ -2,7 +2,7 @@
 <form method="POST" action="index.php">
   <div class="form-group">
     <label>Title</label>
-    <input type="text" class="form-control" placeholder="Title" name="title" required maxlength="50" minlength="1" pattern="[A-Za-z0-9_&$£#@!,.?=()%'*/\:;+ -]+">
+    <input type="text" class="form-control" placeholder="Title" name="title">
   </div>
   <div class="form-group">
     <label>Category</label>
@@ -16,7 +16,7 @@
   </div>
   <div class="form-group">
     <label>Text</label>
-    <textarea class="form-control" rows="3" name="body" required maxlength="500" minlength="1" pattern="(?![\s]+$).*$" ></textarea>
+    <textarea class="form-control" rows="3" name="body"></textarea>
   </div>
   <button type="submit" class="btn btn-primary">Post</button>
 </form>
