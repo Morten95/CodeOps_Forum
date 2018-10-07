@@ -109,7 +109,11 @@ class Controller {
 		/////////////POST TOPIC
 
 		else if (isset($_GET['insert'])) {
-		    $view->create("view/InsertView.php", [$categories]);
+			if($_GET["csrf"] == $_SESSION["token"]){
+		    	$view->create("view/InsertView.php", [$categories]);
+			} else {
+			 	header('Location: index.php');
+			}
 		}
 
 		else if(isset($_POST['submitText'])) {
