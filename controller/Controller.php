@@ -48,7 +48,7 @@ class Controller {
 		   header("Refresh:0");
 		}
 
-		else if(isset($_GET['id'])) {
+		else if(isset($_GET['id']) && is_numeric($_GET['id'])) {
 			$topic = $this->model->getTopicById($_GET['id']);
 			$topicUser = $this->model->getUserByTopic($topic->userId);
 

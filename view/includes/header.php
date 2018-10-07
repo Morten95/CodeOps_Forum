@@ -24,7 +24,7 @@
       <div class="Search bar">
         <form method="post" action="/CodeOps_Forum/index.php?search=1">
           <input type="text" name="Search">
-          <input type="submit" value="Search ">
+          <button type="submit" value="Search">Search</button>
         </form>
       </div>
       <?php } ?>
