@@ -110,7 +110,7 @@ class Controller {
 			$post = new Post(0, filter_var($_POST['postarea'], FILTER_SANITIZE_STRING), $user->id, $_POST['topicId']);
 			$this->model->createPost($post);
 			$_GET['id'] = $_POST['topicId'];
-			header('Location: '. $_POST['redirect']);
+			header('Location: index.php?id='. str_replace("/","",$_GET['id']));
 
 		}	// COMMENT
 		else if (isset($_POST['sub_comment'])){
@@ -153,13 +153,17 @@ class Controller {
 
 		 }
 		 else if (isset($_POST['deletePost'])){
-			 $this->model->deletePostById(str_replace("/","",$_POST["postId"]));
-			 header('Location: ' . $_POST['redirect']);
+			 $this->model->deletePostById(str_replace("/CodeOps_Forum/index.php?id=","",$_POST["postId"]));
+			 $id = str_replace("/CodeOps_Forum/index.php?id=","",$_POST['redirect']);
+			 $id = str_replace("/", "", $id);
+			 header('Location: index.php?id=' . $id);
 		 }
 
 		 else if (isset($_POST['deleteComment'])){
-			 $this->model->deleteCommentById(str_replace("/","",$_POST["commentId"]));
-			 header('Location: ' . $_POST['redirect']);
+			 $this->model->deleteCommentById(str_replace("/CodeOps_Forum/index.php?id=","",$_POST["commentId"]));
+			 $id = str_replace("/CodeOps_Forum/index.php?id=","",$_POST['redirect']);
+			 $id = str_replace("/", "", $id);
+			 header('Location: index.php?id=' . $id);
 		 }
 
 		 else if (isset($_GET['category'])) {
