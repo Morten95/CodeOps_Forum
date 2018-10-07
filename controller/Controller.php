@@ -25,7 +25,7 @@ class Controller {
 		   $userData = filter_var($_POST['username'],FILTER_SANITIZE_STRING);
 		   $user = new User(-1, $userData,$_POST['password'], "", "", "", 0, 0);
 		   $feedback = $this->model->authenticate($user);
-		   
+
 		   if($feedback['status'] == "OK") {
 	    	        $_SESSION["username"] = $user->username;
 	    	        $_SESSION["token"] = md5(uniqid(mt_rand(), true));
@@ -86,7 +86,7 @@ class Controller {
 			$regfname = filter_var($_POST['fname'],FILTER_SANITIZE_STRING);
 			$reglname = filter_var($_POST['lname'],FILTER_SANITIZE_STRING);
 
-			
+
 				$newUser = new User(-1,	$reguser, password_hash($_POST['password_1'], PASSWORD_DEFAULT), $regmail, $regfname, $reglname,0,0);
 
 				$this->model->registerUser($newUser);
@@ -111,6 +111,7 @@ class Controller {
 			$this->model->createPost($post);
 			$_GET['id'] = $_POST['topicId'];
 			header('Location: '. $_POST['redirect']);
+
 		}	// COMMENT
 		else if (isset($_POST['sub_comment'])){
 			$user = $this->model->getUserByName($_SESSION['username']);
@@ -139,11 +140,12 @@ class Controller {
 				
 		 }else if (isset($_GET['search'])) {
 		 	if($_POST["Search"] != ""){
-				$searchKeyword = $_POST["Search"];
+				$searchKeywordDirty = $_POST["Search"];
+				$searchKeyword = htmlentities($searchKeywordDirty, ENT_QUOTES | ENT_HTML5, 'UTF-8');
 			 	$topic = $this->model->getTopicSearchResults($searchKeyword);
 			 	$post = $this->model->getPostSearchResults($searchKeyword);
 			 	$comment = $this->model->getCommentSearchResults($searchKeyword);
-	
+
 			 	$view->create("view/SearchResults.php", [$searchKeyword, $topic, $post, $comment]);
 		 	} else {
 			 header('Location: index.php');
