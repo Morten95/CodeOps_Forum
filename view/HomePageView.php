@@ -10,7 +10,6 @@
 
 
 
-This is the body of the page
 
 
 	<div id="post" class="postlist"> 
