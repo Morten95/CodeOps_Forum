@@ -82,7 +82,7 @@ class Controller {
 		else if (isset($_POST['reg'])) {
 
 			$reguser = filter_var($_POST['userr'],FILTER_SANITIZE_STRING);
-			$regmail = filter_var($_POST['email'],FILTER_SANITIZE_EMAIL); // FILTER_VAR() - For Input FILTER_SANITIZE_EMAIL
+			$regmail = filter_var($_POST['email'],FILTER_SANITIZE_EMAIL); 
 			$regfname = filter_var($_POST['fname'],FILTER_SANITIZE_STRING);
 			$reglname = filter_var($_POST['lname'],FILTER_SANITIZE_STRING);
 
@@ -93,8 +93,6 @@ class Controller {
 		   		header("Refresh:0");
 		}
 
-		/////////////POST TOPIC
-
 		else if (isset($_GET['insert'])) {
 			if($_GET["csrf"] == $_SESSION["token"]){
 		    	$view->create("view/InsertView.php", [$categories]);
@@ -102,7 +100,7 @@ class Controller {
 			 	header('Location: index.php');
 			}
 		}
-
+			//Post
 		else if(isset($_POST['submitText'])) {
 
 			$user = $this->model->getUserByName($_SESSION['username']);
@@ -147,7 +145,7 @@ class Controller {
 		 	} else {
 			 header('Location: index.php');
 		 	}
-}
+		}
         // Deletes Post
 		 else if (isset($_POST['deletePost'])){
 			 $this->model->deletePostById(str_replace("/CodeOps_Forum/index.php?id=","",$_POST["postId"]));
@@ -162,7 +160,7 @@ class Controller {
 			 $id = str_replace("/", "", $id);
 			 header('Location: index.php?id=' . $id);
 		 }
-		 		// Desplays categories
+		 // Desplays categories
 		 else if (isset($_GET['category'])) {
 
 		 	if(isset($_SESSION["username"]) &&  $_GET["csrf"] == $_SESSION["token"]){
@@ -172,7 +170,7 @@ class Controller {
 		 	} else {
 				header('Location: index.php');
 		 	}
-}
+		}
         // Deletes Topic and updates homepage
 		 else if (isset($_POST['topicIdd'])) {
 			 $this->model->deleteTopicById($_POST['topicIdd']);

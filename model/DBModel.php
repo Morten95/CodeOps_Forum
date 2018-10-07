@@ -97,7 +97,7 @@ class DBModel {
             $e->getMessage();
         }
 }
-      // Returns last 10 Topics (to front page)
+        // Returns last 10 Topics (to front page)
     public function getLastTenTopics(){
         $topic = array();
         $stmt = $this->db->query("SELECT * FROM Topic ORDER BY id DESC LIMIT 3");

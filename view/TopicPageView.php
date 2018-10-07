@@ -38,7 +38,7 @@
 						<button style="margin-left:43%" type="button" class="btn btn-primary rep" data-id="<?php echo $postIndex; ?>"><i class="fa fa-reply"></i>
 						</button>
 				<?php } ?>
-					<!--<button type="button" class="btn btn-primary rep" data-id="">Reply</button> -->
+					
 			</div>
 
 
@@ -46,7 +46,7 @@
 		</div>
 		<p><?php echo htmlentities($v1->body, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> </p>
 			<?php if($data[5]) { ?>
-	    		<div class="comment_body" style="display: block";>    <!--- FOR EACH POST I PRINT THE COMMENT & USERNAME ! -->
+	    		<div class="comment_body" style="display: block";>   
 	    			<?php foreach ($data[5] as $com) { ?>
 	    				<?php if ($v1->id == $com->postID) {  ?>
 	    					<hr id="commentLine" >
@@ -65,7 +65,7 @@
 
 	    					<?php }?>
 
-	    					<?php foreach ($data[6] as $user) {  // Inne i user-->
+	    					<?php foreach ($data[6] as $user) {  // FOR EACH POST I PRINT THE COMMENT & USERNAME !
 	    						if ($com->userID == $user->id) { ?>
 									<span>
 	    								<small>
@@ -88,7 +88,7 @@
 
 		<?php if ($data[4]) {  ?>
 		<form class="comment_reply"  style="display: none;" data-id="<?php echo $postIndex; ?>" method="post" action="index.php">
-			<textarea class="form-control" rows="2" name="post_rep" id="post_rep" ></textarea>
+			<textarea class="form-control" rows="2" name="post_rep" id="post_rep" required=""></textarea>
 			<input type="hidden" class="hidden" name="test" class="post_id" value=<?php echo $v1->id?>/>
 			<button type="submit" name="sub_comment" id="sub_comment" class="btn btn-primary" class="post_rep_sub">Submit</button>
 			<input type="hidden" name="redirect123" value=<?php echo $_SERVER['REQUEST_URI'];?>/>
@@ -113,14 +113,6 @@
 
 			<input style="margin-left: 48%;" type="submit" value="Submit" name="submitText" id="submitText"/>
 		</form>
-
-		<?php //echo $_POST['postarea']?>
-	<!--	<form method="post" id="postTextArea" action="index.php?id=<?php //echo $_GET['id'] ?>">
-			<input type="submit" name="submit" value="Send" id="submit" style="float:right;margin:10px;"/>
-				<textarea form="postTextArea" class="area" id="postarea" name="postarea"></textarea>
-		</form>
-	-->
-
 	<?php	} ?>
 
 	</div>
@@ -141,26 +133,24 @@
 function validateComment(){
 	var commentArea=document.getElementById("post_rep").value;
 
-	if (commentArea && $.trim(commentArea).length != 0) {
+	if (commentArea && $.trim(commentArea).length != 0 && $(this).data("id")) {
 		document.getElementById("post_rep").setCustomValidity('');
 	}
 	else{
-		document.getElementById("post_rep").setCustomValidity("Can not post empty comment");
+		document.getElementById("post_rep").setCustomValidity("Can not post empty comment")
 	}
 }
 
 function validateField(){
   var postArea =document.getElementById("postarea").value;
 
-  if (postArea && $.trim(postArea).length != 0 ) {
+  if (postArea && $.trim(postArea).length != 0) {
     document.getElementById("postarea").setCustomValidity(''); 
   }
   else {
     document.getElementById("postarea").setCustomValidity("Can not post an empty text box");
   }
 }
-
-
 
 $(document).ready(function(){
 	$(document).on("click" , "button.rep" , function(){
