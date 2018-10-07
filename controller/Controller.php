@@ -165,7 +165,8 @@ class Controller {
 
 		 else if (isset($_GET['category'])) {
 			 $topics = $this->model->getAllTopicsById($_GET['category']);
-			 $view->create("view/TopicView.php", [$topics, isset($_SESSION["username"])]);
+			 $user = $this->model->getUserByName($_SESSION["username"]);
+			 $view->create("view/TopicView.php", [$topics, isset($_SESSION["username"]), $user]);
 		 }
 
 		 else if (isset($_POST['topicIdd'])) {
