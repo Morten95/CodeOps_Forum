@@ -87,7 +87,7 @@
 			<?php } ?>
 
 		<?php if ($data[4]) {  ?>
-		<form class="comment_reply" data-id="<?php echo $postIndex; ?>" method="post" action="index.php">
+		<form class="comment_reply"  style="display: none;" data-id="<?php echo $postIndex; ?>" method="post" action="index.php">
 			<textarea class="form-control" rows="2" name="post_rep" ></textarea>
 			<input type="hidden" class="hidden" name="test" class="post_id" value=<?php echo $v1->id?>/>
 			<button type="submit" name="sub_comment" class="btn btn-primary" class="post_rep_sub">Submit</button>
@@ -129,16 +129,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <script type="text/javascript">
-for (var i = 0; i <= <?php echo count($data[2]); ?> - 1; i++) {
-    	$("form.comment_reply").hide();
-		$(document).ready(function(){
-	  		$(document).on("click" , "button.rep" , function(){
-	  			if($(this).data("id") == $(this).parents().children().closest("form.comment_reply").data("id") && $(this).parents().children().closest("form.comment_reply").is(":hidden")){
-		     		$(this).parents().children().closest("form.comment_reply").show();
-	  			} else {
-		     		$(this).parents().children().closest("form.comment_reply").hide();
-	  			}
-  		});
+$(document).ready(function(){
+	$(document).on("click" , "button.rep" , function(){
+		if($(this).data("id") == $(this).parents().children().closest("form.comment_reply").data("id")){
+     		$(this).parents().children().closest("form.comment_reply").toggle();
+		}
 	});
-}
+});
 </script>
