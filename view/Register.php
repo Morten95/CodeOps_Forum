@@ -54,7 +54,7 @@ function validateFields(){
 		document.getElementById("fname").setCustomValidity("Firstname not valid");
 	}
 
-	if (n2!=""&&n1.match(/^[A-Za-zæøåÆØÅ-]+$/)) {
+	if (n2!=""&&n2.match(/^[A-Za-zæøåÆØÅ-]+$/)) {
 		document.getElementById("lname").setCustomValidity('');
 	}
 	else {
