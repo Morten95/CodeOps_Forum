@@ -1,13 +1,12 @@
 # CodeOps_Forum
 
-This assignment slash task is done by seven awesome dickheads.
-The assignment was to make a forum which have a simple gui.
+The assignment was to make a forum which has a simple GUI.
+
+
 First thing first:
-
-
-We managed to make a decent forum, where users can create posts and comment.
-Users will either be a visitor or a logged in users who can post and comment on various categories.
-Visitors can either post or comment. The Forum was made with security in mind (nææt).
+We have made a forum in which users can create topics and post replies to these topics and as well write comments.
+Users will either be a visitor or a logged in as a user whom can post and comment on various categories.
+Visitors can only see the forum but nt. The Forum was made with security in mind.
 The group choose the mvc model,(Model, view, controller) and a simple local DB. We do have some additional features for Admin. Admin can modify, delete and, which normal users can't.   
 
 
@@ -48,12 +47,12 @@ and click go.
 19. Now go back
 
 Installation guide Windows       
---------
+
 Prerequisites: 32-bit or 64-bit machine and IQ over 130 like Anders.
 Higher or lower IQ then 130 will complicated the task, so be aware of this before starting
 
-###Download  XAMPP from the https://www.apachefriends.org/index.html
----
+Download  XAMPP from the https://www.apachefriends.org/index.html
+
 1. Choose Download  for Windows.
 2. Double click the file to run the installer.
 3. Click the OK button on the warning to continue
